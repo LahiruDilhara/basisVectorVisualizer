@@ -9,7 +9,9 @@ from ..core.DataTypes import Vector
 
 class VectorSettingsWindow(QWidget):
 
-    vectorPanelSpec: NewVectorPanel.VectorPanelSpec = NewVectorPanel.VectorPanelSpec()
+    vectorPanelSpec: NewVectorPanel.VectorPanelSpec = NewVectorPanel.VectorPanelSpec(
+
+    )
 
     vectorList = [
         Vector("1", "v1", 2, 4, True, 5, "red"),
@@ -25,16 +27,19 @@ class VectorSettingsWindow(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
+        # Create new vector panel
+        vectorPanel = NewVectorPanel.NewVectorPanel(
+            vectorPanelSpec=self.vectorPanelSpec)
+
         # Create button
         addButton = sidePanelButton.SidePanelButton(
-            "Add Vector", buttonColor="#4CAF50", buttonHoverColor="#45a049", buttonPressedColor="#3e8e41", onPressed=None)
+            "Add Vector", buttonColor="#4CAF50", buttonHoverColor="#45a049", buttonPressedColor="#3e8e41", onPressed=self.onAdd)
 
         # Create Vector List Panel
         self.vectorListPanel = VectorListPanel.VectorListPanel(
             vectors=self.vectorList, onUp=self.onUp, onDown=self.onDown, onDelete=self.onDelete)
 
-        layout.addWidget(NewVectorPanel.NewVectorPanel(
-            vectorPanelSpec=self.vectorPanelSpec))
+        layout.addWidget(vectorPanel)
         layout.addWidget(addButton)
         layout.addWidget(self.vectorListPanel)
 
@@ -79,3 +84,20 @@ class VectorSettingsWindow(QWidget):
             self.vectorList.insert(index + 1, item)
 
         self.vectorListPanel.setListItems(self.vectorList)
+
+    def onAdd(self):
+        pass
+
+    def validateVector(self, vector: Vector) -> bool:
+        try:
+            int(vector.id)
+            int(vector.iScaler)
+            int(vector.jScaler)
+            int(vector.thickness)
+            if (len(vector.name) <= 1):
+                return False
+            if (len(vector.color) <= 2):
+                return False
+        except:
+            return False
+        return True

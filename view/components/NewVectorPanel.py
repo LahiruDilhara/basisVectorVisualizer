@@ -25,7 +25,7 @@ class NewVectorPanel(QFrame):
         self.vectorPanelSpec = vectorPanelSpec
 
         self.vectorNameInput = LabeledInput.LabledInput(
-            "vector name :", "0", 10, 12, 12, vectorPanelSpec.onVectorNameChange)
+            "vector name :", "name", 10, 12, 12, vectorPanelSpec.onVectorNameChange)
         self.iScalerInput = LabeledInput.LabledInput(
             "i scaler :", "0", 10, 12, 12, vectorPanelSpec.onIScallerChange)
         self.jScalerInput = LabeledInput.LabledInput(
@@ -54,3 +54,9 @@ class NewVectorPanel(QFrame):
         self.colorPickerButton.setButtonColor(selectedColor)
         if self.vectorPanelSpec.onVectorColorChange:
             self.vectorPanelSpec.onVectorColorChange(selectedColor)
+
+    def reset(self):
+        self.vectorNameInput.resetInput()
+        self.iScalerInput.resetInput()
+        self.jScalerInput.resetInput()
+        self.vectorThikness.resetInput()
