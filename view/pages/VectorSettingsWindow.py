@@ -30,19 +30,34 @@ class VectorSettingsWindow(QWidget):
             "Add Vector", buttonColor="#4CAF50", buttonHoverColor="#45a049", buttonPressedColor="#3e8e41", onPressed=None)
 
         # Create Vector List Panel
-        vectorListPanel = VectorListPanel.VectorListPanel(
+        self.vectorListPanel = VectorListPanel.VectorListPanel(
             vectors=self.vectorList, onUp=self.onUp, onDown=self.onDown, onDelete=self.onDelete)
 
         layout.addWidget(NewVectorPanel.NewVectorPanel(
             vectorPanelSpec=self.vectorPanelSpec))
         layout.addWidget(addButton)
-        layout.addWidget(vectorListPanel)
+        layout.addWidget(self.vectorListPanel)
 
     def onDelete(self, id: str):
         print(id)
 
     def onUp(self, id: str):
-        print(id)
+        index = -1
+
+        for index, vector in enumerate(self.vectorList):
+            print(vector.id, id)
+            if (vector.id == id):
+                index = index
+                break
+
+        if (index == -1):
+            return
+
+        if (index > 0):
+            item = self.vectorList.pop(index)
+            self.vectorList.insert(index - 1, item)
+
+        self.vectorListPanel.setListItems(self.vectorList)
 
     def onDown(self, id: str):
         print(id)

@@ -23,6 +23,13 @@ class VectorListPanel(QFrame):
         self.setListItems(vectorList=vectors)
 
     def setListItems(self, vectorList: list[Vector]):
+        self.remove_all_widgets()
         for vector in vectorList:
             self.layout.addWidget(VectorListItem.VectorListItem(
                 vector=vector, onUp=self.onUp, onDown=self.onDown, onDelete=self.onDelete))
+
+    def remove_all_widgets(self):
+        for i in range(self.layout.count()):
+            widget = self.layout.itemAt(i).widget()
+            if widget:
+                widget.deleteLater()
