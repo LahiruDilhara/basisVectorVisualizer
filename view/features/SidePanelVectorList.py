@@ -28,6 +28,12 @@ def SidePanelVectorList() -> QVBoxLayout:
         VectorListItem(0, "vector 1", False),
         VectorListItem(0, "vector 1", False),
         VectorListItem(0, "vector 1", False),
+        VectorListItem(0, "vector 1", False),
+        VectorListItem(0, "vector 1", False),
+        VectorListItem(0, "vector 1", False),
+        VectorListItem(0, "vector 1", False),
+        VectorListItem(0, "vector 1", False),
+        VectorListItem(0, "vector 1", False),
     ]
 
     return Row.Row(spacing=10, alignment=Qt.AlignmentFlag.AlignLeft, subWidgets=[Row.RowItem(item=LabeledCheckBox.LabeledCheckBox(text=vector.name, checked=vector.enabled), stretch=1) for vector in vectorList])

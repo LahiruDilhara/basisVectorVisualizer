@@ -19,10 +19,8 @@ def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sideP
 
     # Create Vector List Secion
     vectorListFeature = SidePanelVectorList.SidePanelVectorList()
-    # scrollableVectorList = QScrollArea()
-    # scrollableVectorList.setWidgetResizable(False)
-    # scrollableVectorList.setWidget(vectorListFeature)
-    scrollableVectorList = ScrollCard.ScrollCard(vectorListFeature)
+    scrollableVectorList = ScrollCard.ScrollCard(
+        vectorListFeature, resizable=True)
 
     # Create SidePanel Button Secion
     sidePanelButtonFeature = SidePaneltButtonSet.SidePanelButtonSet(
@@ -33,6 +31,6 @@ def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sideP
     return Row.Row(spacing=20, alignment=Qt.AlignmentFlag.AlignTop, subWidgets=[
         Row.RowItem(title_label),
         Row.RowItem(basisVectorFeature),
-        Row.RowItem(vectorListFeature, 1),
+        Row.RowItem(scrollableVectorList, 1),
         Row.RowItem(sidePanelButtonFeature)
     ])
