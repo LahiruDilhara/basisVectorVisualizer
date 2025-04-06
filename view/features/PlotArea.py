@@ -17,9 +17,11 @@ def PlotArea():
     figure, ax = plt.subplots()
     canvas = FigureCanvas(figure)
 
+    plt.tight_layout()
+
     # Add the canvas to the main plot area
     main_plot_layout.addWidget(canvas)
     plotArea.setStyleSheet(
-        "background-color: #ffffff; border-left: 2px solid #ccc;")
+        "background-color: #ffffff;")
 
     return plotArea
