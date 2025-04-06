@@ -39,15 +39,19 @@ class VectorSettingsWindow(QWidget):
         layout.addWidget(self.vectorListPanel)
 
     def onDelete(self, id: str):
-        print(id)
+        for index, vector in enumerate(self.vectorList):
+            if (vector.id == id):
+                self.vectorList.pop(index)
+                break
+
+        self.vectorListPanel.setListItems(self.vectorList)
 
     def onUp(self, id: str):
         index = -1
 
-        for index, vector in enumerate(self.vectorList):
-            print(vector.id, id)
+        for i, vector in enumerate(self.vectorList):
             if (vector.id == id):
-                index = index
+                index = i
                 break
 
         if (index == -1):
@@ -60,4 +64,18 @@ class VectorSettingsWindow(QWidget):
         self.vectorListPanel.setListItems(self.vectorList)
 
     def onDown(self, id: str):
-        print(id)
+        index = -1
+
+        for i, vector in enumerate(self.vectorList):
+            if (vector.id == id):
+                index = i
+                break
+
+        if (index == -1):
+            return
+
+        if (index < len(self.vectorList) - 1):
+            item = self.vectorList.pop(index)
+            self.vectorList.insert(index + 1, item)
+
+        self.vectorListPanel.setListItems(self.vectorList)
