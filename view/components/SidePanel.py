@@ -5,7 +5,7 @@ from ..widgets import Column, HorizontalLabeledCard, LabeledInput, Row, sidePane
 from ..features import BasisVectorInput, SidePaneltButtonSet, SidePanelVectorList
 
 
-def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sidePanelButtonSetSpec: list[SidePaneltButtonSet.SidePanelButtonSpec]):
+def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sidePanelButtonSetSpec: list[SidePaneltButtonSet.SidePanelButtonSpec], vectorList: list[SidePanelVectorList.VectorListItem]):
     # Create Side Panel Title
     title_label = QLabel("Plot Configuration")
     title_label.setFont(QFont("Arial", 18, weight=QFont.Bold))
@@ -18,7 +18,8 @@ def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sideP
         basisVectorInputSpec)
 
     # Create Vector List Secion
-    vectorListFeature = SidePanelVectorList.SidePanelVectorList()
+    vectorListFeature = SidePanelVectorList.SidePanelVectorList(
+        vectorList=vectorList)
     scrollableVectorList = ScrollCard.ScrollCard(
         vectorListFeature, resizable=True)
 

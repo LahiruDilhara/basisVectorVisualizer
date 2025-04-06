@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from ..features.BasisVectorInput import *
-from ..features import SidePaneltButtonSet
+from ..features import SidePaneltButtonSet, SidePanelVectorList
 from ..components import SidePanel, MainPanel
 from ..widgets import ToolButton
 
@@ -21,6 +21,24 @@ class MainWindow(QWidget):
         jxOnChange=lambda x: print(x),
         jyOnChange=lambda x: print(x)
     )
+
+    vectorList: list[SidePanelVectorList.VectorListItem] = [
+        SidePanelVectorList.VectorListItem(0, "vector 1", True),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", True),
+        SidePanelVectorList.VectorListItem(0, "vector 1", True),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+    ]
 
     def __init__(self):
         super().__init__()
@@ -38,7 +56,7 @@ class MainWindow(QWidget):
 
         # Left Sidebar
         self.sidebar = SidePanel.SidePanel(
-            self.basisVectorInputs, self.sidePanelButtons)
+            self.basisVectorInputs, self.sidePanelButtons, vectorList=self.vectorList)
 
         # Main Plot Area
         toolBarButtons = [
