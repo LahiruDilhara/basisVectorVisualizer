@@ -4,10 +4,10 @@ from PySide6.QtGui import QFont, QColor
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
-from .features.BasisVectorInput import *
-from .features import SidePaneltButtonSet
-from .components import SidePanel, MainPanel
-from .widgets import ToolButton
+from ..features.BasisVectorInput import *
+from ..features import SidePaneltButtonSet
+from ..components import SidePanel, MainPanel
+from ..widgets import ToolButton
 
 
 class MainWindow(QWidget):

@@ -1,4 +1,4 @@
-from view.MainWindow import MainWindow
+from view.pages.MainWindow import MainWindow
 import sys
 from PySide6.QtWidgets import QApplication
 
