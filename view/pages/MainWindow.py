@@ -61,11 +61,11 @@ class MainWindow(QWidget):
         # Main Plot Area
         toolBarButtons = [
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("copy")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("plot vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("paste")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("plot real basis vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("delete")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("plot current basis vectors")),
             ToolButton.ToolButton(
                 toolButtonSpec=ToolButton.ToolButtonSpec("write")),
         ]
