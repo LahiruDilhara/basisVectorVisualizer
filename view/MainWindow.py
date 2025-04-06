@@ -10,7 +10,7 @@ from .components import SidePanel, MainPanel
 from .widgets import ToolButton
 
 
-class PlotView(QWidget):
+class MainWindow(QWidget):
     sidePanelButtons: list[SidePaneltButtonSet.SidePanelButtonSpec] = [
         SidePaneltButtonSet.SidePanelButtonSpec(text="Plot Vectors"),
         SidePaneltButtonSet.SidePanelButtonSpec(text="Clear Plot"),

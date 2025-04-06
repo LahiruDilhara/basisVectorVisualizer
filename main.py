@@ -1,11 +1,11 @@
-from view.view import PlotView
+from view.MainWindow import MainWindow
 import sys
 from PySide6.QtWidgets import QApplication
 
 
 def main():
     app = QApplication(sys.argv)
-    window = PlotView()
+    window = MainWindow()
     window.show()
     # window.showMaximized()
     sys.exit(app.exec_())
