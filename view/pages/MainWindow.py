@@ -63,11 +63,13 @@ class MainWindow(QWidget):
             ToolButton.ToolButton(
                 toolButtonSpec=ToolButton.ToolButtonSpec("plot vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("plot real basis vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("plot standard basis vectors")),
             ToolButton.ToolButton(
                 toolButtonSpec=ToolButton.ToolButtonSpec("plot current basis vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("write")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("view only vectors")),
+            ToolButton.ToolButton(
+                toolButtonSpec=ToolButton.ToolButtonSpec("fill the shape")),
         ]
         self.mainPlotArea = MainPanel.MainPanel(toolBarButtons=toolBarButtons)
 

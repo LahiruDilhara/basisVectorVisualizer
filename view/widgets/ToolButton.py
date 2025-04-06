@@ -10,6 +10,7 @@ class ToolButtonSpec():
     buttonHoverColor: str = "#45a049"
     buttonPressedColor: str = "#3e8e41"
     onPressed: Callable = None
+    enabled: bool = True
 
 
 def ToolButton(toolButtonSpec: ToolButtonSpec):
