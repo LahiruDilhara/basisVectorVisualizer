@@ -4,12 +4,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 
 
-def HorizontalStretchBox(subWidgets: list[QWidget]):
+def HorizontalStretchBox(subWidgets: list[QWidget], setSpace: bool = True):
     frame = QFrame()
     frameLayout = QHBoxLayout()
     frame.setLayout(frameLayout)
     for index, widget in enumerate(subWidgets):
         frameLayout.addWidget(widget)
-        if index < len(subWidgets) - 1:
+        if (index < len(subWidgets) - 1) and setSpace:
             frameLayout.addStretch(1)
     return frame

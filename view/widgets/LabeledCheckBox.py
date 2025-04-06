@@ -7,7 +7,7 @@ from PySide6.QtGui import QFont, QColor
 from .HorizontalStretchBox import HorizontalStretchBox
 
 
-def LabeledCheckBox(text: str, checked: bool, onEnable: Callable[[bool], None] = None, fontSize: int = 11):
+def LabeledCheckBox(text: str, checked: bool, onEnable: Callable[[bool], None] = None, fontSize: int = 11, setSpace: bool = True):
     def innerCheckHandler(state: Qt.CheckState):
         if (state == Qt.CheckState.Checked):
             onEnable(True)
@@ -25,7 +25,7 @@ def LabeledCheckBox(text: str, checked: bool, onEnable: Callable[[bool], None] =
         checkBox.stateChanged.connect(innerCheckHandler)
 
     checkBox.setChecked(checked)
-    return HorizontalStretchBox(subWidgets=[
+    return HorizontalStretchBox(setSpace=setSpace, subWidgets=[
         inputLabel,
         checkBox
     ])
