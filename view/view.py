@@ -7,6 +7,7 @@ from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from .features.BasisVectorInput import *
 from .features import SidePaneltButtonSet
 from .components import SidePanel, MainPanel
+from .widgets import ToolButton
 
 
 class PlotView(QWidget):
@@ -40,7 +41,17 @@ class PlotView(QWidget):
             self.basisVectorInputs, self.sidePanelButtons)
 
         # Main Plot Area
-        self.mainPlotArea = MainPanel.MainPanel()
+        toolBarButtons = [
+            ToolButton.ToolButton(
+                toolButtonSpec=ToolButton.ToolButtonSpec("copy")),
+            ToolButton.ToolButton(
+                toolButtonSpec=ToolButton.ToolButtonSpec("paste")),
+            ToolButton.ToolButton(
+                toolButtonSpec=ToolButton.ToolButtonSpec("delete")),
+            ToolButton.ToolButton(
+                toolButtonSpec=ToolButton.ToolButtonSpec("write")),
+        ]
+        self.mainPlotArea = MainPanel.MainPanel(toolBarButtons=toolBarButtons)
 
         # Add the main layout components
         self.mainLayout.addWidget(self.sidebar, 4)

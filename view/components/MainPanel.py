@@ -6,17 +6,7 @@ from ..features import ToolBar, PlotArea
 from ..widgets import Column, Row, ToolButton
 
 
-def MainPanel():
-    toolBarButtons = [
-        ToolButton.ToolButton(
-            toolButtonSpec=ToolButton.ToolButtonSpec("copy")),
-        ToolButton.ToolButton(
-            toolButtonSpec=ToolButton.ToolButtonSpec("paste")),
-        ToolButton.ToolButton(
-            toolButtonSpec=ToolButton.ToolButtonSpec("delete")),
-        ToolButton.ToolButton(
-            toolButtonSpec=ToolButton.ToolButtonSpec("write")),
-    ]
+def MainPanel(toolBarButtons: list[QPushButton] = []):
     return Row.Row(spacing=10, alignment=Qt.AlignmentFlag.AlignTop, subWidgets=[
         Row.RowItem(item=ToolBar.ToolBar(
             spacing=10, alignment=Qt.AlignmentFlag.AlignLeft, toolButtons=toolBarButtons)),
