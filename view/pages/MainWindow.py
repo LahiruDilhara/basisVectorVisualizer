@@ -12,8 +12,8 @@ from ..widgets import ToolButton
 
 class MainWindow(QWidget):
     sidePanelButtons: list[SidePaneltButtonSet.SidePanelButtonSpec] = [
-        SidePaneltButtonSet.SidePanelButtonSpec(text="Plot Vectors"),
-        SidePaneltButtonSet.SidePanelButtonSpec(text="Clear Plot"),
+        SidePaneltButtonSet.SidePanelButtonSpec(text="Vector Settings"),
+        SidePaneltButtonSet.SidePanelButtonSpec(text="Save"),  # Save Function
     ]
     basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
         ixOnChange=lambda x: print(x),
@@ -67,7 +67,7 @@ class MainWindow(QWidget):
             ToolButton.ToolButton(
                 toolButtonSpec=ToolButton.ToolButtonSpec("plot current basis vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("view only vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("draw the shape")),
             ToolButton.ToolButton(
                 toolButtonSpec=ToolButton.ToolButtonSpec("fill the shape")),
         ]
