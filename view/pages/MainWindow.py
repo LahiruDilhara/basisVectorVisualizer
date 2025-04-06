@@ -11,10 +11,7 @@ from ..widgets import ToolButton
 
 
 class MainWindow(QWidget):
-    sidePanelButtons: list[SidePaneltButtonSet.SidePanelButtonSpec] = [
-        SidePaneltButtonSet.SidePanelButtonSpec(text="Vector Settings"),
-        SidePaneltButtonSet.SidePanelButtonSpec(text="Save"),  # Save Function
-    ]
+
     basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
         ixOnChange=lambda x: print(x),
         iyOnChange=lambda x: print(x),
@@ -51,13 +48,12 @@ class MainWindow(QWidget):
         self.setLayout(self.mainLayout)
 
     def initUI(self):
-        # Main Layout
-        self.mainLayout = QHBoxLayout()
-
-        # Left Sidebar
-        self.sidebar = SidePanel.SidePanel(
-            self.basisVectorInputs, self.sidePanelButtons, vectorList=self.vectorList)
-
+        sidePanelButtons: list[SidePaneltButtonSet.SidePanelButtonSpec] = [
+            SidePaneltButtonSet.SidePanelButtonSpec(
+                text="Vector Settings", onPressed=self.openVectorSettingsWindow),
+            SidePaneltButtonSet.SidePanelButtonSpec(
+                text="Save"),  # Save Function
+        ]
         # Main Plot Area
         toolBarButtons = [
             ToolButton.ToolButton(
@@ -71,11 +67,22 @@ class MainWindow(QWidget):
             ToolButton.ToolButton(
                 toolButtonSpec=ToolButton.ToolButtonSpec("fill the shape")),
         ]
+
+        # Main Layout
+        self.mainLayout = QHBoxLayout()
+
+        # Left Sidebar
+        self.sidebar = SidePanel.SidePanel(
+            self.basisVectorInputs, sidePanelButtons, vectorList=self.vectorList)
+
         self.mainPlotArea = MainPanel.MainPanel(toolBarButtons=toolBarButtons)
 
         # Add the main layout components
         self.mainLayout.addWidget(self.sidebar, 4)
         self.mainLayout.addWidget(self.mainPlotArea, 15)
+
+    def openVectorSettingsWindow():
+        pass
 
     def render(self):
         # Render the plot using a plotting library
