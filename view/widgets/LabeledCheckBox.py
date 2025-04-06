@@ -15,7 +15,7 @@ def LabeledCheckBox(text: str, checked: bool, onEnable: Callable[[bool], None] =
             onEnable(False)
     inputLabel = QLabel(text)
     inputLabel.setFont(QFont("Arial", fontSize))  # 11
-    inputLabel.setAlignment(Qt.AlignmentFlag.AlignLeft)
+    inputLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
     inputLabel.setStyleSheet(
         "padding: 5px; background-color: white; border-radius: 8px;")
 
