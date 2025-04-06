@@ -9,6 +9,7 @@ from ..features import SidePaneltButtonSet, SidePanelVectorList
 from ..components import SidePanel, MainPanel
 from ..widgets import ToolButton
 from .VectorSettingsWindow import VectorSettingsWindow
+from ..core.DataTypes import Vector
 
 
 class MainWindow(QWidget):
@@ -20,22 +21,11 @@ class MainWindow(QWidget):
         jyOnChange=lambda x: print(x)
     )
 
-    vectorList: list[SidePanelVectorList.VectorListItem] = [
-        SidePanelVectorList.VectorListItem(0, "vector 1", True),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", True),
-        SidePanelVectorList.VectorListItem(0, "vector 1", True),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
-        SidePanelVectorList.VectorListItem(0, "vector 1", False),
+    vectorList: list[Vector] = [
+        Vector("1", "v1", 2, 4, True, 5, "red"),
+        Vector("2", "v2", 4, 8, True, 50, "green"),
+        Vector("4", "v4", 9, 10, False, 10, "yellow"),
+        Vector("5", "v5", 14, 25, False, 20, "purple"),
     ]
 
     def __init__(self):

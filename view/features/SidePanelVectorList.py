@@ -4,18 +4,8 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 
 from ..widgets import Row,  LabeledCheckBox
+from ..core.DataTypes import Vector
 
 
-@dataclass
-class VectorListItem():
-    id: int
-    name: str
-    enabled: bool
-
-    def getWidget() -> QFrame:
-
-        pass
-
-
-def SidePanelVectorList(vectorList: list[VectorListItem]) -> QVBoxLayout:
+def SidePanelVectorList(vectorList: list[Vector]) -> QVBoxLayout:
     return Row.Row(spacing=10, alignment=Qt.AlignmentFlag.AlignLeft, subWidgets=[Row.RowItem(item=LabeledCheckBox.LabeledCheckBox(text=vector.name, checked=vector.enabled), stretch=1) for vector in vectorList])
