@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont, QColor
+from PySide6.QtGui import QFont, QColor, QCloseEvent
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
@@ -8,6 +8,7 @@ from ..features.BasisVectorInput import *
 from ..features import SidePaneltButtonSet, SidePanelVectorList
 from ..components import SidePanel, MainPanel
 from ..widgets import ToolButton
+from .VectorSettingsWindow import VectorSettingsWindow
 
 
 class MainWindow(QWidget):
@@ -41,6 +42,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Base Vector Display")
         self.setGeometry(100, 100, 1500, 800)
+        self.vectorSettingsWindow = VectorSettingsWindow()
 
         # Initialize UI components
         self.initUI()
@@ -81,9 +83,12 @@ class MainWindow(QWidget):
         self.mainLayout.addWidget(self.sidebar, 4)
         self.mainLayout.addWidget(self.mainPlotArea, 15)
 
-    def openVectorSettingsWindow():
-        pass
+    def openVectorSettingsWindow(self):
+        self.vectorSettingsWindow.show()
 
-    def render(self):
-        # Render the plot using a plotting library
-        pass
+    def closeEvent(self, event: QCloseEvent):
+        # Ensure the VectorSettingsWindow is closed when the main window closes
+        if self.vectorSettingsWindow:
+            self.vectorSettingsWindow.close()
+
+        event.accept()  # Continue with the close event
