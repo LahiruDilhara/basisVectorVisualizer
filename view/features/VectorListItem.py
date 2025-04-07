@@ -20,7 +20,7 @@ def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown
     enabled = LabeledText.LabledText(
         "enabled ", str(vector.enabled), 2, 12, 12, fixedWith=150)
     thickness = LabeledText.LabledText(
-        "thickness", str(vector.thickness), 2, 12, 12, fixedWith=220)
+        "thickness", str(vector.thickness), 2, 12, 12, fixedWith=150)
     color = LabeledColorBox.LabledColorBox(
         "color", vector.color, 2, 12, boxSize=25, fixedWidth=100)
     up = Button.Button(text="up", buttonColor="green", padding=Padding(5
