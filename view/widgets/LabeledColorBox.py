@@ -5,7 +5,7 @@ from typing import Callable
 import matplotlib.pyplot as plt
 
 
-def LabledColorBox(labelText: str, color: str, spacing: int, labelFontSize: int, boxSize: int, fixedWidth: int = None):
+def LabledColorBox(labelText: str, color: str, spacing: int, labelFontSize: int, boxSize: int, fixedWidth: int = None, strechable: bool = False):
     frame = QFrame()
     frame.setStyleSheet(
         "background-color: #ffffff; border-radius: 8px;")
@@ -31,7 +31,7 @@ def LabledColorBox(labelText: str, color: str, spacing: int, labelFontSize: int,
         f"padding: 5px; background-color: {color}; border-radius: 8px;")
 
     inputLayout.addWidget(inputLabel)
-    inputLayout.addWidget(box)
+    inputLayout.addWidget(box, 1 if (strechable) else 0)
 
     if fixedWidth:
         frame.setFixedWidth(fixedWidth)

@@ -5,34 +5,34 @@ from typing import Callable
 import matplotlib.pyplot as plt
 
 
-def LabledText(labelText: str, text: str, spacing: int, labelFontSize: int, textFontSize: int, fixedWith: int = None):
+def LabledText(labelText: str, text: str, spacing: int, labelFontSize: int, textFontSize: int, fixedWith: int = None, strechableText: bool = False):
     frame = QFrame()
     frame.setStyleSheet(
         "background-color: #ffffff; border-radius: 8px;")
     frame.setContentsMargins(0, 0, 0, 0)
 
     # Create a layout for the input
-    inputLayout = QHBoxLayout()
-    inputLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    inputLayout.setSpacing(spacing)  # 10
-    frame.setLayout(inputLayout)
+    textLayout = QHBoxLayout()
+    textLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    textLayout.setSpacing(spacing)  # 10
+    frame.setLayout(textLayout)
 
     # Create a label
-    inputLabel = QLabel(labelText)
-    inputLabel.setFont(QFont("Arial", labelFontSize))  # 11
-    inputLabel.setAlignment(Qt.AlignmentFlag.AlignLeft)
-    inputLabel.setStyleSheet(
+    textLabel = QLabel(labelText)
+    textLabel.setFont(QFont("Arial", labelFontSize))  # 11
+    textLabel.setAlignment(Qt.AlignmentFlag.AlignLeft)
+    textLabel.setStyleSheet(
         "padding: 5px; background-color: white; border-radius: 8px;")
 
     # Create text field
-    input = QLabel(text)
-    input.setStyleSheet(
+    text = QLabel(text)
+    text.setStyleSheet(
         "padding: 5px; background-color: #f4f4f4; border-radius: 8px;")
-    input.setAlignment(Qt.AlignmentFlag.AlignLeft)
-    input.setFont(QFont("Arial", textFontSize))
+    text.setAlignment(Qt.AlignmentFlag.AlignLeft)
+    text.setFont(QFont("Arial", textFontSize))
 
-    inputLayout.addWidget(inputLabel)
-    inputLayout.addWidget(input)
+    textLayout.addWidget(textLabel)
+    textLayout.addWidget(text, 1 if strechableText else 0)
 
     if (fixedWith):
         frame.setFixedWidth(fixedWith)

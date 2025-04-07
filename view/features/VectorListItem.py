@@ -10,19 +10,20 @@ from ..core import DataTypes
 
 def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown: Callable[[str], None], onDelete: Callable[[str], None]):
     # Create Widgets
-    id = LabeledText.LabledText("id", str(vector.id), 2, 12, 12, fixedWith=100)
+    id = LabeledText.LabledText(
+        "id", str(vector.id), 2, 12, 12, fixedWith=100, strechableText=True)
     iScaler = LabeledText.LabledText(
-        "i scaler ", str(vector.iScaler), 2, 12, 12, fixedWith=150)
+        "i scaler ", str(vector.iScaler), 2, 12, 12, fixedWith=150, strechableText=True)
     jScaler = LabeledText.LabledText(
-        "j scaler ", str(vector.jScaler), 2, 12, 12, fixedWith=150)
+        "j scaler ", str(vector.jScaler), 2, 12, 12, fixedWith=150, strechableText=True)
     name = LabeledText.LabledText(
-        "name ", vector.name, 2, 12, 12, fixedWith=200)
+        "name ", vector.name, 2, 12, 12, fixedWith=200, strechableText=True)
     enabled = LabeledText.LabledText(
-        "enabled ", str(vector.enabled), 2, 12, 12, fixedWith=150)
+        "enabled ", str(vector.enabled), 2, 12, 12, fixedWith=150, strechableText=True)
     thickness = LabeledText.LabledText(
-        "thickness", str(vector.thickness), 2, 12, 12, fixedWith=150)
+        "thickness", str(vector.thickness), 2, 12, 12, fixedWith=150, strechableText=True)
     color = LabeledColorBox.LabledColorBox(
-        "color", vector.color, 2, 12, boxSize=25, fixedWidth=100)
+        "color", vector.color, 2, 12, boxSize=25, fixedWidth=100, strechable=True)
     up = Button.Button(text="up", buttonColor="green", padding=Padding(5
                                                                        ), borderRadius="5px", buttonFontSize="15px", fontColor="white", fixedWidth=40, onPressed=(lambda: onUp(vector.id)) if (onUp) else None)
     down = Button.Button(text="down", buttonColor="green", padding=Padding(5
@@ -30,7 +31,7 @@ def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown
     delete = Button.Button(text="delete", buttonColor="red", padding=Padding(5
                                                                              ), borderRadius="5px", buttonFontSize="15px", fontColor="white", fixedWidth=60, onPressed=(lambda: onDelete(vector.id)) if (onDelete) else None)
 
-    listItem = Column.Column(spacing=0, alignment=Qt.AlignmentFlag.AlignCenter, setSpacers=True, subWidgets=[
+    listItem = Column.Column(spacing=12, alignment=Qt.AlignmentFlag.AlignCenter, subWidgets=[
                              id, name, iScaler, jScaler, enabled, thickness, color, up, down, delete])
     listItem.setStyleSheet(
         "background-color:#ffe;border-radius:15px;")
