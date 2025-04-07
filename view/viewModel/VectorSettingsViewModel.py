@@ -27,7 +27,7 @@ class VectorSettingsViewModel(QObject):
         self.jScaler = value
 
     def setThickness(self, value):
-        self.iScaler = value
+        self.thickness = value
 
     def setColor(self, value):
         self.color = value
