@@ -7,7 +7,7 @@ from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from ..features.BasisVectorInput import *
 from ..features import SidePaneltButtonSet, SidePanelVectorList
 from ..components import SidePanel, MainPanel
-from ..widgets import ToolButton
+from ..widgets import ToolButton, ToolColorButton
 from .VectorSettingsWindow import VectorSettingsWindow
 from ..core.DataTypes import Vector
 
@@ -35,6 +35,7 @@ class MainWindow(QWidget):
     def initUI(self):
         self.setWindowTitle("Base Vector Display")
         self.setGeometry(100, 100, 1500, 800)
+
         # Main Layout
         self.mainLayout = QHBoxLayout()
         # Set the main layout
@@ -49,15 +50,16 @@ class MainWindow(QWidget):
         # Main Plot Area
         toolBarButtons = [
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("plot vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("plot standard basis vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot standard basis vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("plot current basis vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot current basis vectors")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("draw the shape")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Draw the shape")),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("fill the shape")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Fill the shape")),
+            ToolColorButton.ToolColorButton("#4CAF50", None)
         ]
 
         # Left Sidebar

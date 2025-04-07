@@ -54,3 +54,13 @@ class BasisVector():
         self.iy = iy
         self.jx = jx
         self.jy = jy
+
+
+class ToolBoxState():
+    def __init__(self, plotVectors: bool, plotStandardBasisVectors: bool, plotCurrentBasisVectors: bool, drawShape: bool, fillShape: bool):
+        self.plotVectors = plotVectors
+        self.plotStandardBasisVectors = plotStandardBasisVectors
+        self.plotCurrentBasisVectors = plotCurrentBasisVectors
+        self.drawShape = drawShape
+        self.fillShape = fillShape
+        pass

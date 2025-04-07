@@ -1,6 +1,6 @@
 from PySide6.QtCore import QObject, Signal
 
-from ..Types import BasisVector
+from ..Types import BasisVector, ToolBoxState
 from ..core.DataTypes import Vector
 import copy
 
@@ -19,6 +19,8 @@ class MainWindowViewModel(QObject):
             Vector(4, "v4", 9, 10, False, 10, "yellow"),
             Vector(5, "v5", 14, 25, False, 20, "purple"),
         ]
+        self.toolBoxState: ToolBoxState = ToolBoxState(
+            True, True, True, True, True)
 
     def onBasisVectorIxChange(self, value: str):
         newIx = self.intOrDefault(value, self.basisVector.ix)
