@@ -9,6 +9,7 @@ class MainWindowViewModel(QObject):
     basisVectorChanged: Signal = Signal(BasisVector)
     # updated vector list, old vector, new vector
     vectorListChanged: Signal = Signal(object, Vector, Vector)
+    toolBoxStateChanged: Signal = Signal(ToolBoxState)
 
     def __init__(self):
         super().__init__()
@@ -62,3 +63,39 @@ class MainWindowViewModel(QObject):
                 v.enabled = state
                 self.vectorListChanged.emit(self.vectorList, oldVector, v)
                 break
+
+    def onPlotVectorToolToggle(self, state: bool):
+        if (state == self.toolBoxState.plotVectors):
+            return
+        self.toolBoxState.plotVectors = state
+        self.toolBoxStateChanged.emit(self.toolBoxState)
+
+    def onPlotStandardBasisVectorsToolToggle(self, state: bool):
+        if (state == self.toolBoxState.plotStandardBasisVectors):
+            return
+        self.toolBoxState.plotStandardBasisVectors = state
+        self.toolBoxStateChanged.emit(self.toolBoxState)
+
+    def onPlotCurrentBasisVectorsToolToggle(self, state: bool):
+        if (state == self.toolBoxState.plotCurrentBasisVectors):
+            return
+        self.toolBoxState.plotCurrentBasisVectors = state
+        self.toolBoxStateChanged.emit(self.toolBoxState)
+
+    def onDrawShapeToolToggle(self, state: bool):
+        if (state == self.toolBoxState.drawShape):
+            return
+        self.toolBoxState.drawShape = state
+        self.toolBoxStateChanged.emit(self.toolBoxState)
+
+    def onFillShapeToolToggle(self, state: bool):
+        if (state == self.toolBoxState.fillShape):
+            return
+        self.toolBoxState.fillShape = state
+        self.toolBoxStateChanged.emit(self.toolBoxState)
+
+    def onFillColorToolToggle(self, color: str):
+        if (color == self.toolBoxState.fillColor):
+            return
+        self.toolBoxState.fillColor = color
+        self.toolBoxStateChanged.emit(self.toolBoxState)

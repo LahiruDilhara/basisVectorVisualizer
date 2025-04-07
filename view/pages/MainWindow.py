@@ -50,17 +50,17 @@ class MainWindow(QWidget):
         # Main Plot Area
         toolBarButtons = [
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Plot vectors", enabled=self.viewModel.toolBoxState.plotVectors)),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot vectors", enabled=self.viewModel.toolBoxState.plotVectors, onPressed=self.viewModel.onPlotVectorToolToggle)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Plot standard basis vectors", enabled=self.viewModel.toolBoxState.plotStandardBasisVectors)),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot standard basis vectors", enabled=self.viewModel.toolBoxState.plotStandardBasisVectors, onPressed=self.viewModel.onPlotStandardBasisVectorsToolToggle)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Plot current basis vectors", enabled=self.viewModel.toolBoxState.plotCurrentBasisVectors)),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot current basis vectors", enabled=self.viewModel.toolBoxState.plotCurrentBasisVectors, onPressed=self.viewModel.onPlotCurrentBasisVectorsToolToggle)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Draw the shape", enabled=self.viewModel.toolBoxState.drawShape)),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Draw the shape", enabled=self.viewModel.toolBoxState.drawShape, onPressed=self.viewModel.onDrawShapeToolToggle)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Fill the shape", enabled=self.viewModel.toolBoxState.fillShape)),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Fill the shape", enabled=self.viewModel.toolBoxState.fillShape, onPressed=self.viewModel.onFillShapeToolToggle)),
             ToolColorButton.ToolColorButton(
-                self.viewModel.toolBoxState.fillColor, None)
+                self.viewModel.toolBoxState.fillColor, onPressed=self.viewModel.onFillColorToolToggle)
         ]
 
         # Left Sidebar
