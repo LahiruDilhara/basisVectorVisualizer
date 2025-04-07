@@ -21,6 +21,7 @@ class VectorListPanel(QFrame):
         self.setLayout(self.layout)
         self.layout.setSpacing(20)
         self.setListItems(vectorList=vectors)
+        self.setStyleSheet("background-color:red;")
 
     def setListItems(self, vectorList: list[Vector]):
         self.remove_all_widgets()
@@ -29,7 +30,10 @@ class VectorListPanel(QFrame):
                 vector=vector, onUp=self.onUp, onDown=self.onDown, onDelete=self.onDelete))
 
     def remove_all_widgets(self):
-        for i in range(self.layout.count()):
-            widget = self.layout.itemAt(i).widget()
-            if widget:
-                widget.deleteLater()
+        while self.layout.count():
+            item = self.layout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        self.update()
+        self.updateGeometry()

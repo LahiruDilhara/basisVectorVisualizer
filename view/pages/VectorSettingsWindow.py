@@ -1,5 +1,5 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect, QApplication
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QColor
 
 from ..components import NewVectorPanel, VectorListPanel
@@ -87,6 +87,7 @@ class VectorSettingsWindow(QWidget):
                 break
 
         self.vectorListPanel.setListItems(self.vectorList)
+        self.refresh()
 
     def onUp(self, id: str):
         index = -1
@@ -104,6 +105,12 @@ class VectorSettingsWindow(QWidget):
             self.vectorList.insert(index - 1, item)
 
         self.vectorListPanel.setListItems(self.vectorList)
+
+    def refresh(self):
+        self.setUpdatesEnabled(False)
+        # remove the flickering and adjust the window size
+        QTimer.singleShot(0, self.adjustSize)
+        self.setUpdatesEnabled(True)
 
     def onDown(self, id: str):
         index = -1
@@ -132,6 +139,7 @@ class VectorSettingsWindow(QWidget):
 
         self.vectorList.append(vector)
         self.vectorListPanel.setListItems(self.vectorList)
+        self.refresh()
 
     def validateVector(self, vector: Vector) -> bool:
         if (vector.thickness <= 0):
