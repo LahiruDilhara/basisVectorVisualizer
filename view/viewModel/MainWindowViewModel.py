@@ -20,7 +20,7 @@ class MainWindowViewModel(QObject):
             Vector(5, "v5", 14, 25, False, 20, "purple"),
         ]
         self.toolBoxState: ToolBoxState = ToolBoxState(
-            True, True, True, True, True)
+            True, True, True, True, False, "#4CAF50")
 
     def onBasisVectorIxChange(self, value: str):
         newIx = self.intOrDefault(value, self.basisVector.ix)

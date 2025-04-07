@@ -50,16 +50,17 @@ class MainWindow(QWidget):
         # Main Plot Area
         toolBarButtons = [
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Plot vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot vectors", enabled=self.viewModel.toolBoxState.plotVectors)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Plot standard basis vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot standard basis vectors", enabled=self.viewModel.toolBoxState.plotStandardBasisVectors)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Plot current basis vectors")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Plot current basis vectors", enabled=self.viewModel.toolBoxState.plotCurrentBasisVectors)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Draw the shape")),
+                toolButtonSpec=ToolButton.ToolButtonSpec("Draw the shape", enabled=self.viewModel.toolBoxState.drawShape)),
             ToolButton.ToolButton(
-                toolButtonSpec=ToolButton.ToolButtonSpec("Fill the shape")),
-            ToolColorButton.ToolColorButton("#4CAF50", None)
+                toolButtonSpec=ToolButton.ToolButtonSpec("Fill the shape", enabled=self.viewModel.toolBoxState.fillShape)),
+            ToolColorButton.ToolColorButton(
+                self.viewModel.toolBoxState.fillColor, None)
         ]
 
         # Left Sidebar

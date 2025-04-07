@@ -57,10 +57,10 @@ class BasisVector():
 
 
 class ToolBoxState():
-    def __init__(self, plotVectors: bool, plotStandardBasisVectors: bool, plotCurrentBasisVectors: bool, drawShape: bool, fillShape: bool):
+    def __init__(self, plotVectors: bool, plotStandardBasisVectors: bool, plotCurrentBasisVectors: bool, drawShape: bool, fillShape: bool, fillColor: str):
         self.plotVectors = plotVectors
         self.plotStandardBasisVectors = plotStandardBasisVectors
         self.plotCurrentBasisVectors = plotCurrentBasisVectors
         self.drawShape = drawShape
         self.fillShape = fillShape
-        pass
+        self.fillColor = fillColor
