@@ -10,18 +10,18 @@ from ..core import DataTypes
 
 def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown: Callable[[str], None], onDelete: Callable[[str], None]):
     # Create Widgets
-    id = LabeledText.LabledText("id", str(vector.id), 10, 12, 12)
+    id = LabeledText.LabledText("id", str(vector.id), 2, 12, 12)
     iScaler = LabeledText.LabledText(
-        "i scaler ", str(vector.iScaler), 10, 12, 12)
+        "i scaler ", str(vector.iScaler), 2, 12, 12)
     jScaler = LabeledText.LabledText(
-        "j scaler ", str(vector.jScaler), 10, 12, 12)
-    name = LabeledText.LabledText("name ", vector.name, 10, 12, 12)
+        "j scaler ", str(vector.jScaler), 2, 12, 12)
+    name = LabeledText.LabledText("name ", vector.name, 2, 12, 12)
     enabled = LabeledText.LabledText(
-        "enabled ", str(vector.enabled), 10, 12, 12)
+        "enabled ", str(vector.enabled), 2, 12, 12)
     thickness = LabeledText.LabledText(
-        "thickness", str(vector.thickness), 10, 12, 12)
+        "thickness", str(vector.thickness), 2, 12, 12)
     color = LabeledColorBox.LabledColorBox(
-        "color", vector.color, 10, 12, boxSize=25)
+        "color", vector.color, 2, 12, boxSize=25)
     up = Button.Button(text="up", buttonColor="green", padding=Padding(5
                                                                        ), borderRadius="5px", buttonFontSize="15px", fontColor="white", onPressed=(lambda: onUp(vector.id)) if (onUp) else None)
     down = Button.Button(text="down", buttonColor="green", padding=Padding(5
@@ -29,9 +29,8 @@ def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown
     delete = Button.Button(text="delete", buttonColor="red", padding=Padding(5
                                                                              ), borderRadius="5px", buttonFontSize="15px", fontColor="white", onPressed=(lambda: onDelete(vector.id)) if (onDelete) else None)
 
-    listItem = Column.Column(spacing=15, alignment=Qt.AlignmentFlag.AlignCenter, subWidgets=[
+    listItem = Column.Column(spacing=0, alignment=Qt.AlignmentFlag.AlignCenter, setSpacers=True, subWidgets=[
                              id, name, iScaler, jScaler, enabled, thickness, color, up, down, delete])
     listItem.setStyleSheet(
         "background-color:#ffe;border-radius:15px;")
-    listItem.setFixedWidth(1100)
     return listItem
