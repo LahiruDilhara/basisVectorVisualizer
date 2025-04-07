@@ -21,7 +21,6 @@ class VectorListPanel(QFrame):
         self.setLayout(self.layout)
         self.layout.setSpacing(20)
         self.setListItems(vectorList=vectors)
-        self.setStyleSheet("background-color:red;")
 
     def setListItems(self, vectorList: list[Vector]):
         self.remove_all_widgets()
