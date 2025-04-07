@@ -20,12 +20,21 @@ class PlotAreaViewModel(QObject):
         super().__init__()
         self.service: VectorService = vectorService
 
+        # State
+        self.basisVector: BasisVector = None
+        self.vectorList: list[Vector] = None
+
     def SetPlotVectors(self, basisVector: BasisVector, vectorList: list[Vector]):
+        self.basisVector = basisVector
+        self.vectorList = vectorList
         self.clearPlot()
-        basei = [basisVector.ix, basisVector.iy]
-        basej = [basisVector.jx, basisVector.jy]
+        self.PlotVectors()
+
+    def PlotVectors(self):
+        basei = [self.basisVector.ix, self.basisVector.iy]
+        basej = [self.basisVector.jx, self.basisVector.jy]
         processedVectors: list[np.ndarray[int, int]] = []
-        for vector in vectorList:
+        for vector in self.vectorList:
             if (not vector.enabled):
                 continue
             processedVector = self.service.vectorFromBases(
@@ -57,6 +66,21 @@ class PlotAreaViewModel(QObject):
         minY -= 10
         maxY += 10
         self.plotLimitChanged.emit([minX, maxX], [minY, maxY])
+
+    def plotActionHandler(self, toolBoxState: ToolBoxState):
+        self.clearPlot()
+        if toolBoxState.plotStandardBasisVectors:
+            self.plotStandardBasisVectors()
+        if self.basisVector == None or self.vectorList == None:
+            return
+        if toolBoxState.plotVectors:
+            self.PlotVectors()
+
+    def plotStandardBasisVectors(self):
+        self.vectorUpdated.emit(
+            1, 0, "#000000", "i", 0, 0, 50)
+        self.vectorUpdated.emit(
+            0, 1, "#000000", "j", 0, 0, 50)
 
     def clearPlot(self):
         self.plotCleared.emit()

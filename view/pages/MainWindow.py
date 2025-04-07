@@ -84,6 +84,10 @@ class MainWindow(QWidget):
         self.viewModel.vectorListChanged.connect(self.sidebar.updateVectorList)
         self.viewModel.vectorListChanged.connect(lambda x: self.plotViewModel.SetPlotVectors(
             vectorList=x, basisVector=self.viewModel.basisVector))
+        self.viewModel.basisVectorChanged.connect(lambda x: self.plotViewModel.SetPlotVectors(
+            vectorList=self.viewModel.vectorList, basisVector=x))
+        self.viewModel.toolBoxStateChanged.connect(
+            self.plotViewModel.plotActionHandler)
 
     def openVectorSettingsWindow(self):
         viewModel = VectorSettingsViewModel()

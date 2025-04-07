@@ -36,6 +36,8 @@ class PlotArea(QWidget):
 
         self.setCordinateSystem()
 
+        self.canvas.mpl_connect("motion_notify_event", self.mouse_move_event)
+
     def connectSignals(self):
         self.viewModel.vectorUpdated.connect(self.plotVectorHandler)
         self.viewModel.plotLimitChanged.connect(self.plotSizeHandler)
@@ -48,13 +50,19 @@ class PlotArea(QWidget):
         self.drawPlot()
 
     def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int]):
-        self.ax.set_xlim(xLim)
-        self.ax.set_ylim(yLim)
+        xAspect = self.width() / self.height()
+        yAspect = 1
+
+        self.ax.set_xlim(xLim[0] * xAspect,  xLim[1] * xAspect)
+        self.ax.set_ylim(yLim[0] * yAspect, yLim[1] * yAspect)
+        # self.ax.set_xlim(xLim)
+        # self.ax.set_ylim(yLim)
         self.canvas.draw()
 
     def clearPlotHandler(self):
         self.ax.clear()
         self.setCordinateSystem()
+        self.canvas.draw()
 
     def drawPlot(self):
         self.ax.legend()
@@ -65,9 +73,22 @@ class PlotArea(QWidget):
         self.ax.axvline(0, color='black', linewidth=1)
         self.ax.grid(True, linestyle="--", alpha=0.5)
 
-        self.ax.set_xlim(-10, 10)
-        self.ax.set_ylim(-10, 10)
+        xAspect = self.width() / self.height()
+        yAspect = 1
+
+        self.ax.set_xlim(-10 * xAspect, 10 * xAspect)
+        self.ax.set_ylim(-10 * yAspect, 10 * yAspect)
 
         self.ax.grid(True, linestyle="--", linewidth=0.5)
         self.ax.set_xlabel("X-axis")
         self.ax.set_ylabel("Y-axis")
+
+        # self.ax.set_aspect("equal")
+        self.ax.set_adjustable('datalim')
+
+    def mouse_move_event(self, event):
+        if event.xdata is not None and event.ydata is not None:
+            print(
+                f"Mouse Coordinates: ({event.xdata:.2f}, {event.ydata:.2f})")
+        else:
+            print("Mouse Coordinates: ( , )")

@@ -24,7 +24,7 @@ def BasisVectorInput(basisVectorInputSpec: BasisVectorInputSpec) -> QFrame:
     jxInput = LabeledInput.LabledInput(
         labelText="x :", defaultValue="0", labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jxOnChange)
     jyInput = LabeledInput.LabledInput(
-        labelText="x :", defaultValue="1", labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jyOnChange)
+        labelText="y :", defaultValue="1", labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jyOnChange)
 
     # Create Input Container
 

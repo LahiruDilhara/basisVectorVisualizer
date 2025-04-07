@@ -56,7 +56,8 @@ class MainWindowViewModel(QObject):
         self.basisVectorChanged.emit(self.basisVector)
 
     def intOrDefault(self, value: str, default: int = 0):
-        if (str.isdigit(value)):
+        stripedValue = value.strip("-")
+        if (str.isdigit(stripedValue)):
             return int(value)
         return default
 
