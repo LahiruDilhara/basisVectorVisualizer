@@ -3,11 +3,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 from ..widgets import Column, HorizontalLabeledCard, LabeledInput, Row, sidePanelButton, VerticalLabeledCard, ScrollCard
 from ..features import BasisVectorInput, SidePaneltButtonSet, SidePanelVectorList
+from typing import Callable
 
 from ..core.DataTypes import Vector
 
 
-def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sidePanelButtonSetSpec: list[SidePaneltButtonSet.SidePanelButtonSpec], vectorList: list[Vector]):
+def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sidePanelButtonSetSpec: list[SidePaneltButtonSet.SidePanelButtonSpec], vectorList: list[Vector], onVectorToggle: Callable[[Vector, bool], None] = None):
     # Create Side Panel Title
     title_label = QLabel("Plot Configuration")
     title_label.setFont(QFont("Arial", 18, weight=QFont.Bold))
@@ -21,7 +22,7 @@ def SidePanel(basisVectorInputSpec: BasisVectorInput.BasisVectorInputSpec, sideP
 
     # Create Vector List Secion
     vectorListFeature = SidePanelVectorList.SidePanelVectorList(
-        vectorList=vectorList)
+        vectorList=vectorList, onToggle=onVectorToggle)
     scrollableVectorList = ScrollCard.ScrollCard(
         vectorListFeature, resizable=True)
 

@@ -50,3 +50,6 @@ class MainWindowViewModel(QObject):
         if (str.isdigit(value)):
             return int(value)
         return default
+
+    def onVectorToggle(self, vector: Vector, state: bool):
+        print(vector, state)

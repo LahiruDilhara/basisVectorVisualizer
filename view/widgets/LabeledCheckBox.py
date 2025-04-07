@@ -9,9 +9,9 @@ from .HorizontalStretchBox import HorizontalStretchBox
 
 def LabeledCheckBox(text: str, checked: bool, onEnable: Callable[[bool], None] = None, fontSize: int = 11, setSpace: bool = True):
     def innerCheckHandler(state: Qt.CheckState):
-        if (state == Qt.CheckState.Checked):
+        if (state == Qt.CheckState.Checked.value):
             onEnable(True)
-        elif (state == Qt.CheckState.Unchecked):
+        elif (state == Qt.CheckState.Unchecked.value):
             onEnable(False)
     inputLabel = QLabel(text)
     inputLabel.setFont(QFont("Arial", fontSize))  # 11
@@ -21,10 +21,11 @@ def LabeledCheckBox(text: str, checked: bool, onEnable: Callable[[bool], None] =
 
     checkBox = QCheckBox()
 
+    checkBox.setChecked(checked)
+
     if (onEnable):
         checkBox.stateChanged.connect(innerCheckHandler)
 
-    checkBox.setChecked(checked)
     return HorizontalStretchBox(setSpace=setSpace, subWidgets=[
         inputLabel,
         checkBox

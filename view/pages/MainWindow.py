@@ -63,7 +63,7 @@ class MainWindow(QWidget):
 
         # Left Sidebar
         self.sidebar = SidePanel.SidePanel(
-            self.basisVectorInputs, sidePanelButtons, vectorList=self.viewModel.vectorList)
+            self.basisVectorInputs, sidePanelButtons, vectorList=self.viewModel.vectorList, onVectorToggle=self.viewModel.onVectorToggle)
 
         self.mainPlotArea = MainPanel.MainPanel(toolBarButtons=toolBarButtons)
 
