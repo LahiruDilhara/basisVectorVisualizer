@@ -2,11 +2,13 @@ from PySide6.QtCore import QObject, Signal
 
 from ..Types import BasisVector
 from ..core.DataTypes import Vector
+import copy
 
 
 class MainWindowViewModel(QObject):
     basisVectorChanged: Signal = Signal(BasisVector)
-    vectorListChanged: Signal = Signal(list[Vector])
+    # updated vector list, old vector, new vector
+    vectorListChanged: Signal = Signal(object, Vector, Vector)
 
     def __init__(self):
         super().__init__()
@@ -52,4 +54,9 @@ class MainWindowViewModel(QObject):
         return default
 
     def onVectorToggle(self, vector: Vector, state: bool):
-        print(vector, state)
+        oldVector = copy.copy(vector)
+        for v in self.vectorList:
+            if (v.id == vector.id):
+                v.enabled = state
+                self.vectorListChanged.emit(self.vectorList, oldVector, v)
+                break
