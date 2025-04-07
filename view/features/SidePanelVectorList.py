@@ -28,6 +28,7 @@ class SidePanelVectorList(QWidget):
             self.onToggle, vector) if self.onToggle else None) for vector in vectorList]
         for widget in subWidgets:
             self.layout.addWidget(widget)
+        self.layout.addStretch(1)
 
     def removeListItems(self):
         self.layout.count()
