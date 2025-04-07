@@ -11,27 +11,22 @@ from ..widgets import ToolButton
 from .VectorSettingsWindow import VectorSettingsWindow
 from ..core.DataTypes import Vector
 
+from ..viewModel.MainWindowViewModel import MainWindowViewModel
+
 
 class MainWindow(QWidget):
 
-    basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
-        ixOnChange=lambda x: print(x),
-        iyOnChange=lambda x: print(x),
-        jxOnChange=lambda x: print(x),
-        jyOnChange=lambda x: print(x)
-    )
-
-    vectorList: list[Vector] = [
-        Vector(1, "v1", 2, 4, True, 5, "red"),
-        Vector(2, "v2", 4, 8, True, 50, "green"),
-        Vector(4, "v4", 9, 10, False, 10, "yellow"),
-        Vector(5, "v5", 14, 25, False, 20, "purple"),
-    ]
-
-    def __init__(self):
+    def __init__(self, viewModel: MainWindowViewModel):
         super().__init__()
-        self.setWindowTitle("Base Vector Display")
-        self.setGeometry(100, 100, 1500, 800)
+        self.viewModel = viewModel
+
+        self.basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
+            ixOnChange=viewModel.onBasisVectorIxChange,
+            iyOnChange=viewModel.onBasisVectorIyChange,
+            jxOnChange=viewModel.onBasisVectorJxChange,
+            jyOnChange=viewModel.onBasisVectorJyChange
+        )
+
         self.vectorSettingsWindow = VectorSettingsWindow()
 
         # Initialize UI components
@@ -40,6 +35,9 @@ class MainWindow(QWidget):
         self.setLayout(self.mainLayout)
 
     def initUI(self):
+        self.setWindowTitle("Base Vector Display")
+        self.setGeometry(100, 100, 1500, 800)
+
         sidePanelButtons: list[SidePaneltButtonSet.SidePanelButtonSpec] = [
             SidePaneltButtonSet.SidePanelButtonSpec(
                 text="Vector Settings", onPressed=self.openVectorSettingsWindow),
@@ -65,7 +63,7 @@ class MainWindow(QWidget):
 
         # Left Sidebar
         self.sidebar = SidePanel.SidePanel(
-            self.basisVectorInputs, sidePanelButtons, vectorList=self.vectorList)
+            self.basisVectorInputs, sidePanelButtons, vectorList=self.viewModel.vectorList)
 
         self.mainPlotArea = MainPanel.MainPanel(toolBarButtons=toolBarButtons)
 
