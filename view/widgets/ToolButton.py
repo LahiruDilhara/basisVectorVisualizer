@@ -7,8 +7,9 @@ from dataclasses import dataclass
 @dataclass
 class ToolButtonSpec():
     text: str
-    buttonColor: str = "#4CAF50"
-    onPressed: Callable = None
+    buttonEnableColor: str = "#4CAF50"
+    buttonDisableColor: str = "red"
+    onPressed: Callable[[bool], None] = None
     enabled: bool = True
 
 
@@ -23,11 +24,18 @@ class ToolButton(QPushButton):
         self.setText(self.toolButtonSpec.text)
         self.setButtonColor()
 
-        if (self.toolButtonSpec.onPressed):
-            self.clicked.connect(self.toolButtonSpec.onPressed)
+        self.clicked.connect(self.onButtonPress)
+
+    def onButtonPress(self):
+        self.toolButtonSpec.enabled = not self.toolButtonSpec.enabled
+        if self.toolButtonSpec.onPressed:
+            self.toolButtonSpec.onPressed(self.toolButtonSpec.enabled)
+        self.setButtonColor()
 
     def setButtonColor(self):
-        baseColor = QColor(self.toolButtonSpec.buttonColor)
+        color = self.toolButtonSpec.buttonEnableColor if (
+            self.toolButtonSpec.enabled) else self.toolButtonSpec.buttonDisableColor
+        baseColor = QColor(color)
         hoverColor = baseColor.lighter(110).name()
         pressedColor = baseColor.darker(110).name()
 
@@ -46,7 +54,7 @@ class ToolButton(QPushButton):
             QPushButton:pressed {{
                 background-color: {2};
             }}
-        """.format(self.toolButtonSpec.buttonColor, hoverColor, pressedColor))
+        """.format(color, hoverColor, pressedColor))
 
 
 # def ToolButton(toolButtonSpec: ToolButtonSpec):
