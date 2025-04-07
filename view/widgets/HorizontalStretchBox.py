@@ -8,6 +8,8 @@ def HorizontalStretchBox(subWidgets: list[QWidget], setSpace: bool = True):
     frame = QFrame()
     frameLayout = QHBoxLayout()
     frame.setLayout(frameLayout)
+    frame.setStyleSheet(
+        "background-color: #ffffff; border-radius: 8px;")
     for index, widget in enumerate(subWidgets):
         frameLayout.addWidget(widget)
         if (index < len(subWidgets) - 1) and setSpace:

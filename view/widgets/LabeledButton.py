@@ -1,11 +1,11 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QHBoxLayout, QFrame, QLabel
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QHBoxLayout, QFrame, QLabel, QSizePolicy
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 from typing import Callable
 
 
 class LabeledButton(QFrame):
-    def __init__(self, labelText: str, buttonText: str, spacing: int, labelFontSize: int, onPress: Callable[[], None], buttonColor: str = "#4CAF50"):
+    def __init__(self, labelText: str, buttonText: str, spacing: int, labelFontSize: int, onPress: Callable[[], None], buttonColor: str = "#4CAF50", infiniteSpace: bool = False, buttonStrech: bool = False):
         super().__init__()
         self.lableText = labelText
         self.spacing = spacing
@@ -13,8 +13,10 @@ class LabeledButton(QFrame):
         self.onPress = onPress
         self.buttonText = buttonText
         self.buttonColor = buttonColor
+        self.infiniteSpace = infiniteSpace
+        self.buttonStretch = buttonStrech
 
-        self.setStyleSheet("background-color: #ffffff; border-radius: 8px;")
+        self.setStyleSheet("background-color: #fff; border-radius: 8px;")
         self.setContentsMargins(0, 0, 0, 0)
         self.init_ui()
 
@@ -22,13 +24,14 @@ class LabeledButton(QFrame):
         # Create a layout for the button
         buttonCtonainerLayout = QHBoxLayout()
         buttonCtonainerLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        buttonCtonainerLayout.setSpacing(self.spacing)  # 10
+        if not self.infiniteSpace:
+            buttonCtonainerLayout.setSpacing(self.spacing)  # 10
         self.setLayout(buttonCtonainerLayout)
 
         # Create a label
         buttonLabel = QLabel(self.lableText)
         buttonLabel.setFont(QFont("Arial", self.labelFontSize))  # 11
-        buttonLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # buttonLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         buttonLabel.setStyleSheet(
             "padding: 5px; background-color: white; border-radius: 8px;")
 
@@ -41,7 +44,12 @@ class LabeledButton(QFrame):
             self.button.pressed.connect(self.onPress)
 
         buttonCtonainerLayout.addWidget(buttonLabel)
-        buttonCtonainerLayout.addWidget(self.button)
+        if (self.infiniteSpace and not self.buttonStretch):
+            buttonCtonainerLayout.addStretch(1)
+        if self.buttonStretch:
+            buttonCtonainerLayout.addWidget(self.button, 1)
+        else:
+            buttonCtonainerLayout.addWidget(self.button)
 
     def setButtonColor(self, color: str):
         baseColor = QColor(color)
@@ -65,6 +73,7 @@ class LabeledButton(QFrame):
                 }}
             """
         self.button.setStyleSheet(button_styles)
+        self.button.setText(color)
 
 # def LabeledButton(labelText: str, spacing: int, labelFontSize: int,  onPress: Callable[[], None], buttonColor: str = "#4CAF50"):
 #     frame = QFrame()

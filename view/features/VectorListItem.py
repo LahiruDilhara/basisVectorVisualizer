@@ -33,4 +33,5 @@ def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown
                              id, name, iScaler, jScaler, enabled, thickness, color, up, down, delete])
     listItem.setStyleSheet(
         "background-color:#ffe;border-radius:15px;")
+    listItem.setFixedWidth(1100)
     return listItem

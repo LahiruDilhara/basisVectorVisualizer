@@ -37,11 +37,11 @@ class NewVectorPanel(QFrame):
         self.jScalerInput = LabeledInput.LabledInput(
             "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onJScallerChange(int(text)) if (str.isdigit(text)) else None))
         self.vectorEnabledInput = LabeledCheckBox.LabeledCheckBox(
-            "vector enabled : ", vectorPanelSpec.defaultEnabled, vectorPanelSpec.onEnableInputChange, setSpace=False)
+            "vector enabled : ", vectorPanelSpec.defaultEnabled, vectorPanelSpec.onEnableInputChange, setSpace=True)
         self.vectorThikness = LabeledInput.LabledInput(
             "thickness :", str(vectorPanelSpec.defaultThickness), 10, 12, 12, lambda text: (vectorPanelSpec.onVectorThiknesChange(int(text)) if (str.isdigit(text)) else None))
         self.colorPickerButton = LabeledButton.LabeledButton(
-            "choose color :", "selected color", 10, 12, self.onPress, buttonColor=vectorPanelSpec.defaultColor)
+            "choose color :", "selected color", 10, 12, self.onPress, buttonColor=vectorPanelSpec.defaultColor, buttonStrech=True)
 
         self.layout: QGridLayout = QGridLayout()
         self.setLayout(self.layout)
@@ -51,8 +51,7 @@ class NewVectorPanel(QFrame):
         self.layout.addWidget(self.vectorNameInput, 0, 2)
         self.layout.addWidget(self.vectorEnabledInput, 1, 0)
         self.layout.addWidget(self.vectorThikness, 1, 1)
-        self.layout.addWidget(self.colorPickerButton, 1, 2,
-                              Qt.AlignmentFlag.AlignCenter)
+        self.layout.addWidget(self.colorPickerButton, 1, 2)
 
     def onPress(self):
         color = QColorDialog.getColor()
