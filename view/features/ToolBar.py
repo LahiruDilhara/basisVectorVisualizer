@@ -11,4 +11,6 @@ def ToolBar(spacing: int, alignment: Qt.AlignmentFlag = Qt.AlignmentFlag.AlignCe
     for i in toolButtons:
         subWidgets.append(i)
 
-    return SpaceCard.SpaceCard(subWidget=Column.Column(spacing=spacing, alignment=alignment, subWidgets=subWidgets))
+    card = SpaceCard.SpaceCard(subWidget=Column.Column(
+        spacing=spacing, alignment=alignment, subWidgets=subWidgets))
+    return card
