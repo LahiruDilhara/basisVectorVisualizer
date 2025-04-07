@@ -22,10 +22,10 @@ class MainWindow(QWidget):
     )
 
     vectorList: list[Vector] = [
-        Vector("1", "v1", 2, 4, True, 5, "red"),
-        Vector("2", "v2", 4, 8, True, 50, "green"),
-        Vector("4", "v4", 9, 10, False, 10, "yellow"),
-        Vector("5", "v5", 14, 25, False, 20, "purple"),
+        Vector(1, "v1", 2, 4, True, 5, "red"),
+        Vector(2, "v2", 4, 8, True, 50, "green"),
+        Vector(4, "v4", 9, 10, False, 10, "yellow"),
+        Vector(5, "v5", 14, 25, False, 20, "purple"),
     ]
 
     def __init__(self):

@@ -39,12 +39,12 @@ class VectorSettingsWindow(QWidget):
         self.setWindowTitle("Vector Settings")
 
         # Initialize the data holding part for vector panel section
-        self.name = ""
-        self.iScaler = ""
-        self.jScaler = ""
-        self.thickness = ""
-        self.color = ""
-        self.enabled = bool
+        self.name = "name"
+        self.iScaler = 0
+        self.jScaler = 0
+        self.thickness = 1
+        self.color = "#4CAF50"
+        self.enabled = True
 
         self.vectorPanelSpec: NewVectorPanel.VectorPanelSpec = NewVectorPanel.VectorPanelSpec(
             onEnableInputChange=self.setEnabled,
@@ -52,7 +52,13 @@ class VectorSettingsWindow(QWidget):
             onJScallerChange=self.setJScaler,
             onVectorColorChange=self.setColor,
             onVectorNameChange=self.setName,
-            onVectorThiknesChange=self.setThickness
+            onVectorThiknesChange=self.setThickness,
+            defaultName=self.name,
+            defaultIScaler=self.iScaler,
+            defaultJScaler=self.jScaler,
+            defaultColor=self.color,
+            defaultEnabled=self.enabled,
+            defaultThickness=self.thickness
         )
 
         layout = QVBoxLayout()
@@ -117,23 +123,28 @@ class VectorSettingsWindow(QWidget):
         self.vectorListPanel.setListItems(self.vectorList)
 
     def onAdd(self):
+        id = self.getId()
+        vector = Vector(id, self.name, self.iScaler, self.jScaler,
+                        self.enabled, self.thickness, self.color)
+        print(vector)
+        if not self.validateVector(vector):
+            return
 
-        # if ()
-        pass
+        self.vectorList.append(vector)
+        self.vectorListPanel.setListItems(self.vectorList)
 
     def validateVector(self, vector: Vector) -> bool:
-        try:
-            int(vector.id)
-            int(vector.iScaler)
-            int(vector.jScaler)
-            int(vector.thickness)
-            if (len(vector.name) <= 1):
-                return False
-            if (len(vector.color) <= 2):
-                return False
-        except:
+        if (vector.thickness <= 0):
+            return False
+        if (len(vector.name) <= 1):
+            return False
+        if (len(vector.color) <= 2):
             return False
         return True
 
     def getId(self):
-        pass
+        max = -1
+        for i in self.vectorList:
+            if (i.id > max):
+                max = i.id
+        return max + 1

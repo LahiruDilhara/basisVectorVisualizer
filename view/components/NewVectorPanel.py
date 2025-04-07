@@ -10,11 +10,17 @@ from ..widgets import LabeledInput, LabeledCheckBox, LabeledButton
 @dataclass
 class VectorPanelSpec():
     onVectorNameChange: Callable[[str], None] = None
-    onIScallerChange: Callable[[str], None] = None
-    onJScallerChange: Callable[[str], None] = None
-    onVectorThiknesChange: Callable[[str], None] = None
+    onIScallerChange: Callable[[int], None] = None
+    onJScallerChange: Callable[[int], None] = None
+    onVectorThiknesChange: Callable[[int], None] = None
     onVectorColorChange: Callable[[str], None] = None
     onEnableInputChange: Callable[[bool], None] = None
+    defaultName: str = ""
+    defaultIScaler: int = 0
+    defaultJScaler: int = 0
+    defaultEnabled: bool = True
+    defaultThickness: int = 1
+    defaultColor: str = "#4CAF50"
 
 
 class NewVectorPanel(QFrame):
@@ -25,17 +31,17 @@ class NewVectorPanel(QFrame):
         self.vectorPanelSpec = vectorPanelSpec
 
         self.vectorNameInput = LabeledInput.LabledInput(
-            "vector name :", "name", 10, 12, 12, vectorPanelSpec.onVectorNameChange)
+            "vector name :", vectorPanelSpec.defaultName, 10, 12, 12, vectorPanelSpec.onVectorNameChange)
         self.iScalerInput = LabeledInput.LabledInput(
-            "i scaler :", "0", 10, 12, 12, vectorPanelSpec.onIScallerChange)
+            "i scaler :", str(vectorPanelSpec.defaultIScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onIScallerChange(int(text)) if (str.isdigit(text)) else None))
         self.jScalerInput = LabeledInput.LabledInput(
-            "j scaler :", "0", 10, 12, 12, vectorPanelSpec.onJScallerChange)
+            "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onJScallerChange(int(text)) if (str.isdigit(text)) else None))
         self.vectorEnabledInput = LabeledCheckBox.LabeledCheckBox(
-            "vector enabled : ", True, vectorPanelSpec.onEnableInputChange, setSpace=False)
+            "vector enabled : ", vectorPanelSpec.defaultEnabled, vectorPanelSpec.onEnableInputChange, setSpace=False)
         self.vectorThikness = LabeledInput.LabledInput(
-            "thickness :", "0", 10, 12, 12, vectorPanelSpec.onVectorThiknesChange)
+            "thickness :", str(vectorPanelSpec.defaultThickness), 10, 12, 12, lambda text: (vectorPanelSpec.onVectorThiknesChange(int(text)) if (str.isdigit(text)) else None))
         self.colorPickerButton = LabeledButton.LabeledButton(
-            "choose color :", "selected color", 10, 12, self.onPress, buttonColor="#4CAF50")
+            "choose color :", "selected color", 10, 12, self.onPress, buttonColor=vectorPanelSpec.defaultColor)
 
         self.layout: QGridLayout = QGridLayout()
         self.setLayout(self.layout)
