@@ -4,65 +4,79 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 
 
-def ScrollCard(subWidget: QWidget, resizable: bool = False, verticalScrolling: bool = True, horizontalScrolling: bool = True):
+class ScrollCard(QScrollArea):
+    def __init__(self, subWidget: QWidget, resizable: bool = False, verticalScrolling: bool = True, horizontalScrolling: bool = True):
+        super().__init__()
+        self.subWidget = subWidget
+        self.resizable = resizable
+        self.verticalScrolling = verticalScrolling
+        self.horizontalScrolling = horizontalScrolling
 
-    scroll_area = QScrollArea()
-    scroll_area.setWidgetResizable(resizable)
-    scroll_area.setWidget(subWidget)
+        self.initUI()
 
-    if verticalScrolling:
-        scroll_area.setVerticalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-    else:
-        scroll_area.setVerticalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+    def initUI(self):
+        self.setWidgetResizable(self.resizable)
+        self.setWidget(self.subWidget)
 
-    if horizontalScrolling:
-        scroll_area.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-    else:
-        scroll_area.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        if self.verticalScrolling:
+            self.setVerticalScrollBarPolicy(
+                Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        else:
+            self.setVerticalScrollBarPolicy(
+                Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
-    scroll_area.setStyleSheet("""
-    QScrollArea {
-        border: none;
-        background: #ffffff;
-        border-radius: 10px;
-    }
+        if self.horizontalScrolling:
+            self.setHorizontalScrollBarPolicy(
+                Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        else:
+            self.setHorizontalScrollBarPolicy(
+                Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+            self.setScrollAreaWidth()
+            # self.setFixedWidth(self.subWidget.sizeHint().width(
+            # ) + self.verticalScrollBar().sizeHint().width())
 
-    /* Vertical ScrollBar */
-    QScrollBar:vertical, QScrollBar:horizontal {
-        background: #f4f4f4;
-        width: 8px;
-        height: 8px;
-        border-radius: 4px;
-    }
+        self.setStyleSheet("""
+        QScrollArea {
+            border: none;
+            background: #ffffff;
+            border-radius: 10px;
+        }
 
-    /* Handle (Thumb) */
-    QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
-        background: #BBB;
-        min-height: 20px;
-        min-width: 20px;
-        border-radius: 4px;
-    }
+        /* Vertical ScrollBar */
+        QScrollBar:vertical, QScrollBar:horizontal {
+            background: #f4f4f4;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+        }
 
-    /* Hover State */
-    QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
-        background: #777;
-    }
+        /* Handle (Thumb) */
+        QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+            background: #BBB;
+            min-height: 20px;
+            min-width: 20px;
+            border-radius: 4px;
+        }
 
-    /* Pressed State */
-    QScrollBar::handle:vertical:pressed, QScrollBar::handle:horizontal:pressed {
-        background: #999;
-    }
+        /* Hover State */
+        QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+            background: #777;
+        }
 
-    /* Remove the up/down and left/right buttons */
-    QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
-    QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
-        background: none;
-        border: none;
-    }
-""")
+        /* Pressed State */
+        QScrollBar::handle:vertical:pressed, QScrollBar::handle:horizontal:pressed {
+            background: #999;
+        }
 
-    return scroll_area
+        /* Remove the up/down and left/right buttons */
+        QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+        QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+            background: none;
+            border: none;
+        }
+    """)
+
+    def setScrollAreaWidth(self):
+        if not self.horizontalScrolling:
+            self.setFixedWidth((self.subWidget.minimumSizeHint().width(
+            ) + self.verticalScrollBar().sizeHint().width()))

@@ -17,6 +17,9 @@ class VectorSettingsWindow(QWidget):
         self.setWindowTitle("Vector Settings")
         self.mainViewModel = mainViewModel
         self.viewModel = viewModel
+        self.scrollableVectorListPanel = None
+        self.vectorListPanel = None
+        self.layout: QVBoxLayout = None
 
         self.initUI()
 
@@ -42,8 +45,8 @@ class VectorSettingsWindow(QWidget):
             defaultThickness=self.viewModel.thickness
         )
 
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
 
         # Create new vector panel
         vectorPanel = NewVectorPanel.NewVectorPanel(
@@ -58,11 +61,12 @@ class VectorSettingsWindow(QWidget):
             vectors=self.mainViewModel.vectorList, onUp=self.mainViewModel.onVectorMoveUp, onDown=self.mainViewModel.onVectorMoveDown, onDelete=self.mainViewModel.onVectorDelete)
 
         self.scrollableVectorListPanel = ScrollCard.ScrollCard(
-            self.vectorListPanel, resizable=True)
+            self.vectorListPanel, resizable=True, horizontalScrolling=False)
+        self.setFixedHeight(600)
 
-        layout.addWidget(vectorPanel)
-        layout.addWidget(addButton)
-        layout.addWidget(self.scrollableVectorListPanel)
+        self.layout.addWidget(vectorPanel)
+        self.layout.addWidget(addButton)
+        self.layout.addWidget(self.scrollableVectorListPanel)
 
     def onVectorListChange(self, vectorList: list[Vector]):
         self.setUpdatesEnabled(False)
@@ -70,3 +74,4 @@ class VectorSettingsWindow(QWidget):
         QTimer.singleShot(0, self.adjustSize)
         self.setUpdatesEnabled(True)
         self.vectorListPanel.setListItems(vectorList=vectorList)
+        QTimer.singleShot(1, self.scrollableVectorListPanel.setScrollAreaWidth)

@@ -27,6 +27,7 @@ class VectorListPanel(QFrame):
         for vector in vectorList:
             self.layout.addWidget(VectorListItem.VectorListItem(
                 vector=vector, onUp=self.onUp, onDown=self.onDown, onDelete=self.onDelete))
+        self.layout.addStretch(1)
 
     def remove_all_widgets(self):
         while self.layout.count():
