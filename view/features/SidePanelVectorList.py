@@ -9,16 +9,30 @@ from typing import Callable
 from functools import partial
 
 
-def SidePanelVectorList(vectorList: list[Vector], onToggle: Callable[[Vector, bool], None] = None) -> QVBoxLayout:
-    return Row.Row(
-        spacing=10,
-        alignment=Qt.AlignmentFlag.AlignLeft,
-        subWidgets=[Row.RowItem(
-            item=LabeledCheckBox.LabeledCheckBox(
-                text=vector.name,
-                checked=vector.enabled,
-                onEnable=partial(onToggle, vector) if onToggle else None
-            ),
-            stretch=1
-        ) for vector in vectorList]
-    )
+class SidePanelVectorList(QWidget):
+    def __init__(self, vectorList: list[Vector], onToggle: Callable[[Vector, bool], None] = None):
+        super().__init__()
+        self.vectorList = vectorList
+        self.onToggle = onToggle
+        self.layout: QHBoxLayout = QHBoxLayout()
+        self.setLayout(self.layout)
+        self.setContentsMargins(0, 0, 0, 0)
+
+        self.initUI()
+
+    def initUI(self):
+        widget = Row.Row(
+            spacing=10,
+            alignment=Qt.AlignmentFlag.AlignLeft,
+            subWidgets=[Row.RowItem(
+                item=LabeledCheckBox.LabeledCheckBox(
+                    text=vector.name,
+                    checked=vector.enabled,
+                    onEnable=partial(
+                        self.onToggle, vector) if self.onToggle else None
+                ),
+                stretch=1
+            ) for vector in self.vectorList]
+        )
+
+        self.layout.addWidget(widget)
