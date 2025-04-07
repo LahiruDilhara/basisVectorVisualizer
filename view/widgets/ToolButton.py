@@ -1,5 +1,6 @@
 from typing import Callable
 from PySide6.QtWidgets import QPushButton
+from PySide6.QtGui import QFont, QColor, QCloseEvent
 from dataclasses import dataclass
 
 
@@ -7,17 +8,30 @@ from dataclasses import dataclass
 class ToolButtonSpec():
     text: str
     buttonColor: str = "#4CAF50"
-    buttonHoverColor: str = "#45a049"
-    buttonPressedColor: str = "#3e8e41"
     onPressed: Callable = None
     enabled: bool = True
 
 
-def ToolButton(toolButtonSpec: ToolButtonSpec):
-    # Create a button for the sidebar
-    button = QPushButton(toolButtonSpec.text)
+class ToolButton(QPushButton):
+    def __init__(self, toolButtonSpec: ToolButtonSpec):
+        super().__init__()
+        self.toolButtonSpec = toolButtonSpec
 
-    button.setStyleSheet("""
+        self.initUI()
+
+    def initUI(self):
+        self.setText(self.toolButtonSpec.text)
+        self.setButtonColor()
+
+        if (self.toolButtonSpec.onPressed):
+            self.clicked.connect(self.toolButtonSpec.onPressed)
+
+    def setButtonColor(self):
+        baseColor = QColor(self.toolButtonSpec.buttonColor)
+        hoverColor = baseColor.lighter(110).name()
+        pressedColor = baseColor.darker(110).name()
+
+        self.setStyleSheet("""
             QPushButton {{
                 background-color: {0};
                 color: white;
@@ -32,8 +46,30 @@ def ToolButton(toolButtonSpec: ToolButtonSpec):
             QPushButton:pressed {{
                 background-color: {2};
             }}
-        """.format(toolButtonSpec.buttonColor, toolButtonSpec.buttonHoverColor, toolButtonSpec.buttonPressedColor))
+        """.format(self.toolButtonSpec.buttonColor, hoverColor, pressedColor))
 
-    if (toolButtonSpec.onPressed):
-        button.clicked.connect(toolButtonSpec.onPressed)
-    return button
+
+# def ToolButton(toolButtonSpec: ToolButtonSpec):
+#     # Create a button for the sidebar
+#     button = QPushButton(toolButtonSpec.text)
+
+#     button.setStyleSheet("""
+#             QPushButton {{
+#                 background-color: {0};
+#                 color: white;
+#                 border: none;
+#                 padding: 10px 20px;
+#                 font-size: 16px;
+#                 border-radius: 5px;
+#             }}
+#             QPushButton:hover {{
+#                 background-color: {1};
+#             }}
+#             QPushButton:pressed {{
+#                 background-color: {2};
+#             }}
+#         """.format(toolButtonSpec.buttonColor, toolButtonSpec.buttonHoverColor, toolButtonSpec.buttonPressedColor))
+
+#     if (toolButtonSpec.onPressed):
+#         button.clicked.connect(toolButtonSpec.onPressed)
+#     return button
