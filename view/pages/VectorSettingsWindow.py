@@ -5,6 +5,7 @@ from PySide6.QtGui import QFont, QColor
 from ..components import NewVectorPanel, VectorListPanel
 from ..widgets import sidePanelButton
 from ..core.DataTypes import Vector
+from ..widgets import ScrollCard
 
 from ..viewModel import MainWindowViewModel, VectorSettingsViewModel
 
@@ -56,9 +57,12 @@ class VectorSettingsWindow(QWidget):
         self.vectorListPanel = VectorListPanel.VectorListPanel(
             vectors=self.mainViewModel.vectorList, onUp=self.mainViewModel.onVectorMoveUp, onDown=self.mainViewModel.onVectorMoveDown, onDelete=self.mainViewModel.onVectorDelete)
 
+        self.scrollableVectorListPanel = ScrollCard.ScrollCard(
+            self.vectorListPanel, resizable=True)
+
         layout.addWidget(vectorPanel)
         layout.addWidget(addButton)
-        layout.addWidget(self.vectorListPanel)
+        layout.addWidget(self.scrollableVectorListPanel)
 
     def onVectorListChange(self, vectorList: list[Vector]):
         self.setUpdatesEnabled(False)
