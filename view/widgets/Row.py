@@ -21,5 +21,3 @@ def Row(spacing: int, subWidgets: list[RowItem], alignment: Qt.AlignmentFlag = Q
         containerLayout.addWidget(item.item, item.stretch)
 
     return container
-
-    pass

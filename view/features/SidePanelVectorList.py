@@ -14,25 +14,27 @@ class SidePanelVectorList(QWidget):
         super().__init__()
         self.vectorList = vectorList
         self.onToggle = onToggle
-        self.layout: QHBoxLayout = QHBoxLayout()
+        self.layout: QVBoxLayout = QVBoxLayout()
         self.setLayout(self.layout)
-        self.setContentsMargins(0, 0, 0, 0)
 
         self.initUI()
 
     def initUI(self):
-        widget = Row.Row(
-            spacing=10,
-            alignment=Qt.AlignmentFlag.AlignLeft,
-            subWidgets=[Row.RowItem(
-                item=LabeledCheckBox.LabeledCheckBox(
-                    text=vector.name,
-                    checked=vector.enabled,
-                    onEnable=partial(
-                        self.onToggle, vector) if self.onToggle else None
-                ),
-                stretch=1
-            ) for vector in self.vectorList]
-        )
+        self.setVectorList(self.vectorList)
 
-        self.layout.addWidget(widget)
+    def setVectorList(self, vectorList: list[Vector]):
+        self.removeListItems()
+        subWidgets = [LabeledCheckBox.LabeledCheckBox(text=vector.name, checked=vector.enabled, onEnable=partial(
+            self.onToggle, vector) if self.onToggle else None) for vector in vectorList]
+        for widget in subWidgets:
+            self.layout.addWidget(widget)
+
+    def removeListItems(self):
+        self.layout.count()
+        while self.layout.count():
+            item = self.layout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        self.update()
+        self.updateGeometry()

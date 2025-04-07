@@ -18,6 +18,7 @@ class SidePanel(QWidget):
         self.sidePanelButtonSetSpec = sidePanelButtonSetSpec
         self.vectorList = vectorList
         self.onVectorToggle = onVectorToggle
+        self.vectorListPanel = None
 
         self.initUi()
 
@@ -34,10 +35,10 @@ class SidePanel(QWidget):
             self.basisVectorInputSpec)
 
         # Create Vector List Secion
-        vectorListFeature = SidePanelVectorList.SidePanelVectorList(
+        self.vectorListPanel = SidePanelVectorList.SidePanelVectorList(
             vectorList=self.vectorList, onToggle=self.onVectorToggle)
         scrollableVectorList = ScrollCard.ScrollCard(
-            vectorListFeature, resizable=True)
+            self.vectorListPanel, resizable=True)
 
         # Create SidePanel Button Secion
         sidePanelButtonFeature = SidePaneltButtonSet.SidePanelButtonSet(
@@ -52,3 +53,6 @@ class SidePanel(QWidget):
             Row.RowItem(sidePanelButtonFeature)
         ])
         self.layout.addWidget(row)
+
+    def updateVectorList(self, vectorList: list[Vector]):
+        self.vectorListPanel.setVectorList(vectorList=vectorList)

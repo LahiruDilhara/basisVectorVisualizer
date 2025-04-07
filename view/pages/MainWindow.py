@@ -32,6 +32,7 @@ class MainWindow(QWidget):
 
         # Initialize UI components
         self.initUI()
+        self.connectSignals()
 
     def initUI(self):
         self.setWindowTitle("Base Vector Display")
@@ -73,6 +74,9 @@ class MainWindow(QWidget):
         # Add the main layout components
         self.mainLayout.addWidget(self.sidebar, 4)
         self.mainLayout.addWidget(self.mainPlotArea, 15)
+
+    def connectSignals(self):
+        self.viewModel.vectorListChanged.connect(self.sidebar.updateVectorList)
 
     def openVectorSettingsWindow(self):
         viewModel = VectorSettingsViewModel()
