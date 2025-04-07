@@ -5,12 +5,18 @@ from PySide6.QtGui import QFont, QColor
 
 
 class ScrollCard(QScrollArea):
-    def __init__(self, subWidget: QWidget, resizable: bool = False, verticalScrolling: bool = True, horizontalScrolling: bool = True):
+    def __init__(self, subWidget: QWidget, resizable: bool = False, verticalScrolling: bool = True, horizontalScrolling: bool = True, minHeight: int = None, minWidth: int = None):
         super().__init__()
         self.subWidget = subWidget
         self.resizable = resizable
         self.verticalScrolling = verticalScrolling
         self.horizontalScrolling = horizontalScrolling
+
+        if minHeight:
+            self.setMinimumHeight(minHeight)
+
+        if minWidth:
+            self.setMinimumWidth(minWidth)
 
         self.initUI()
 
@@ -31,9 +37,6 @@ class ScrollCard(QScrollArea):
         else:
             self.setHorizontalScrollBarPolicy(
                 Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-            self.setScrollAreaWidth()
-            # self.setFixedWidth(self.subWidget.sizeHint().width(
-            # ) + self.verticalScrollBar().sizeHint().width())
 
         self.setStyleSheet("""
         QScrollArea {
@@ -76,7 +79,7 @@ class ScrollCard(QScrollArea):
         }
     """)
 
-    def setScrollAreaWidth(self):
-        if not self.horizontalScrolling:
-            self.setFixedWidth((self.subWidget.minimumSizeHint().width(
-            ) + self.verticalScrollBar().sizeHint().width()))
+    # def setScrollAreaWidth(self):
+    #     if not self.horizontalScrolling:
+    #         self.setFixedWidth((self.subWidget.minimumSizeHint().width(
+    #         ) + self.verticalScrollBar().sizeHint().width()))

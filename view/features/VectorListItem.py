@@ -31,7 +31,7 @@ def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown
     delete = Button.Button(text="delete", buttonColor="red", padding=Padding(5
                                                                              ), borderRadius="5px", buttonFontSize="15px", fontColor="white", fixedWidth=60, onPressed=(lambda: onDelete(vector.id)) if (onDelete) else None)
 
-    listItem = Column.Column(spacing=12, alignment=Qt.AlignmentFlag.AlignCenter, subWidgets=[
+    listItem = Column.Column(spacing=0, addEndSpacer=True, addStartSpacer=True, setSpacers=True, alignment=Qt.AlignmentFlag.AlignCenter, subWidgets=[
                              id, name, iScaler, jScaler, enabled, thickness, color, up, down, delete])
     listItem.setStyleSheet(
         "background-color:#ffe;border-radius:15px;")
