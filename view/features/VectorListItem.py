@@ -10,7 +10,7 @@ from ..core import DataTypes
 
 def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown: Callable[[str], None], onDelete: Callable[[str], None]):
     # Create Widgets
-    idText = LabeledText.LabledText("id", vector.id, 10, 12, 12)
+    id = LabeledText.LabledText("id", str(vector.id), 10, 12, 12)
     iScaler = LabeledText.LabledText(
         "i scaler ", str(vector.iScaler), 10, 12, 12)
     jScaler = LabeledText.LabledText(
@@ -30,7 +30,7 @@ def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown
                                                                              ), borderRadius="5px", buttonFontSize="15px", fontColor="white", onPressed=(lambda: onDelete(vector.id)) if (onDelete) else None)
 
     listItem = Column.Column(spacing=15, alignment=Qt.AlignmentFlag.AlignCenter, subWidgets=[
-                             idText, name, iScaler, jScaler, enabled, thickness, color, up, down, delete])
+                             id, name, iScaler, jScaler, enabled, thickness, color, up, down, delete])
     listItem.setStyleSheet(
         "background-color:#ffe;border-radius:15px;")
     return listItem

@@ -45,10 +45,10 @@ class LabledInput(QFrame):
 
         # Connect the signals
         if (self.onChange):
-            input.textChanged.connect(self.onChange)
+            self.input.textChanged.connect(self.onChange)
 
         inputLayout.addWidget(inputLabel)
-        inputLayout.addWidget(input)
+        inputLayout.addWidget(self.input)
 
     def resetInput(self):
         self.input.setText(self.defaultValue)

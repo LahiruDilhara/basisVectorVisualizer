@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Vector():
-    id: str
+    id: int
     name: str
     iScaler: int
     jScaler: int

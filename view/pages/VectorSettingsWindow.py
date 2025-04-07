@@ -9,20 +9,51 @@ from ..core.DataTypes import Vector
 
 class VectorSettingsWindow(QWidget):
 
-    vectorPanelSpec: NewVectorPanel.VectorPanelSpec = NewVectorPanel.VectorPanelSpec(
-
-    )
-
     vectorList = [
-        Vector("1", "v1", 2, 4, True, 5, "red"),
-        Vector("2", "v2", 4, 8, True, 50, "green"),
-        Vector("4", "v4", 9, 10, False, 10, "yellow"),
-        Vector("5", "v5", 14, 25, False, 20, "purple"),
+        Vector(1, "v1", 2, 4, True, 5, "red"),
+        Vector(2, "v2", 4, 8, True, 50, "green"),
+        Vector(4, "v4", 9, 10, False, 10, "yellow"),
+        Vector(5, "v5", 14, 25, False, 20, "purple"),
     ]
+
+    def setName(self, value):
+        self.name = value
+
+    def setIScaler(self, value):
+        self.iScaler = value
+
+    def setJScaler(self, value):
+        self.jScaler = value
+
+    def setThickness(self, value):
+        self.iScaler = value
+
+    def setColor(self, value):
+        self.color = value
+
+    def setEnabled(self, value):
+        self.enabled = value
 
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Vector Settings")
+
+        # Initialize the data holding part for vector panel section
+        self.name = ""
+        self.iScaler = ""
+        self.jScaler = ""
+        self.thickness = ""
+        self.color = ""
+        self.enabled = bool
+
+        self.vectorPanelSpec: NewVectorPanel.VectorPanelSpec = NewVectorPanel.VectorPanelSpec(
+            onEnableInputChange=self.setEnabled,
+            onIScallerChange=self.setIScaler,
+            onJScallerChange=self.setJScaler,
+            onVectorColorChange=self.setColor,
+            onVectorNameChange=self.setName,
+            onVectorThiknesChange=self.setThickness
+        )
 
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -86,6 +117,8 @@ class VectorSettingsWindow(QWidget):
         self.vectorListPanel.setListItems(self.vectorList)
 
     def onAdd(self):
+
+        # if ()
         pass
 
     def validateVector(self, vector: Vector) -> bool:
@@ -101,3 +134,6 @@ class VectorSettingsWindow(QWidget):
         except:
             return False
         return True
+
+    def getId(self):
+        pass
