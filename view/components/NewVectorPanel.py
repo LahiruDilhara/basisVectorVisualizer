@@ -41,7 +41,7 @@ class NewVectorPanel(QFrame):
         self.vectorThikness = LabeledInput.LabledInput(
             "thickness :", str(vectorPanelSpec.defaultThickness), 10, 12, 12, lambda text: (vectorPanelSpec.onVectorThiknesChange(int(text)) if (str.isdigit(text)) else None))
         self.colorPickerButton = LabeledButton.LabeledButton(
-            "choose color :", "selected color", 10, 12, self.onPress, buttonColor=vectorPanelSpec.defaultColor, buttonStrech=True)
+            "choose color :", self.vectorPanelSpec.defaultColor, 10, 12, self.onPress, buttonColor=vectorPanelSpec.defaultColor, buttonStrech=True)
 
         self.layout: QGridLayout = QGridLayout()
         self.setLayout(self.layout)
@@ -57,6 +57,7 @@ class NewVectorPanel(QFrame):
         color = QColorDialog.getColor()
         selectedColor = color.name()
         self.colorPickerButton.setButtonColor(selectedColor)
+        self.colorPickerButton.setButtonName(selectedColor)
         if self.vectorPanelSpec.onVectorColorChange:
             self.vectorPanelSpec.onVectorColorChange(selectedColor)
 

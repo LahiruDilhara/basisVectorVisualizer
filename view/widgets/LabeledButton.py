@@ -73,7 +73,9 @@ class LabeledButton(QFrame):
                 }}
             """
         self.button.setStyleSheet(button_styles)
-        self.button.setText(color)
+
+    def setButtonName(self, name: str):
+        self.button.setText(name)
 
 # def LabeledButton(labelText: str, spacing: int, labelFontSize: int,  onPress: Callable[[], None], buttonColor: str = "#4CAF50"):
 #     frame = QFrame()
