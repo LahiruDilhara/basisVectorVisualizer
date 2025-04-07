@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxL
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 
-from ..widgets import Row,  LabeledCheckBox
+from ..widgets import Row,  LabeledCheckBox, Column
 from ..core.DataTypes import Vector
 from typing import Callable
 from functools import partial
@@ -24,7 +24,9 @@ class SidePanelVectorList(QWidget):
 
     def setVectorList(self, vectorList: list[Vector]):
         self.removeListItems()
-        subWidgets = [LabeledCheckBox.LabeledCheckBox(text=vector.name, checked=vector.enabled, onEnable=partial(
+        # subWidgets = [LabeledCheckBox.LabeledCheckBox(text=vector.name, checked=vector.enabled, onEnable=partial(
+        #     self.onToggle, vector) if self.onToggle else None) for vector in vectorList]
+        subWidgets = [self.vectorItem(text=vector.name, color=vector.color, checked=vector.enabled, onEnable=partial(
             self.onToggle, vector) if self.onToggle else None) for vector in vectorList]
         for widget in subWidgets:
             self.layout.addWidget(widget)
@@ -39,3 +41,15 @@ class SidePanelVectorList(QWidget):
 
         self.update()
         self.updateGeometry()
+
+    def vectorItem(self, text: str, checked: bool, onEnable: Callable, color: str):
+        colorBox = QWidget()
+        colorBox.setFixedSize(20, 20)
+        colorBox.setStyleSheet(
+            f"background-color:{color}; border-radius: 10px;")
+        return Column.Column(setSpacers=False, spacing=10, alignment=Qt.AlignmentFlag.AlignCenter, subWidgets=[
+            LabeledCheckBox.LabeledCheckBox(
+                text=text, checked=checked, onEnable=onEnable),
+            colorBox
+
+        ])
