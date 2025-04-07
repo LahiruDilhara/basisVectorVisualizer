@@ -74,4 +74,3 @@ class VectorSettingsWindow(QWidget):
         QTimer.singleShot(0, self.adjustSize)
         self.setUpdatesEnabled(True)
         self.vectorListPanel.setListItems(vectorList=vectorList)
-        QTimer.singleShot(1, self.scrollableVectorListPanel.setScrollAreaWidth)
