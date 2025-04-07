@@ -31,12 +31,14 @@ class MainWindow(QWidget):
 
         # Initialize UI components
         self.initUI()
-        # Set the main layout
-        self.setLayout(self.mainLayout)
 
     def initUI(self):
         self.setWindowTitle("Base Vector Display")
         self.setGeometry(100, 100, 1500, 800)
+        # Main Layout
+        self.mainLayout = QHBoxLayout()
+        # Set the main layout
+        self.setLayout(self.mainLayout)
 
         sidePanelButtons: list[SidePaneltButtonSet.SidePanelButtonSpec] = [
             SidePaneltButtonSet.SidePanelButtonSpec(
@@ -57,9 +59,6 @@ class MainWindow(QWidget):
             ToolButton.ToolButton(
                 toolButtonSpec=ToolButton.ToolButtonSpec("fill the shape")),
         ]
-
-        # Main Layout
-        self.mainLayout = QHBoxLayout()
 
         # Left Sidebar
         self.sidebar = SidePanel.SidePanel(
