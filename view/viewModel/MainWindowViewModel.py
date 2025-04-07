@@ -113,7 +113,6 @@ class MainWindowViewModel(QObject):
         id = self.getId()
         vector.id = id
         self.vectorList.append(vector)
-        print(vector)
         self.vectorListChanged.emit(self.vectorList)
 
     def onPlotVectorToolToggle(self, state: bool):

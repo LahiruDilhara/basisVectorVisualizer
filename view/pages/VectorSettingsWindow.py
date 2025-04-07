@@ -11,13 +11,6 @@ from ..viewModel import MainWindowViewModel, VectorSettingsViewModel
 
 class VectorSettingsWindow(QWidget):
 
-    vectorList = [
-        Vector(1, "v1", 2, 4, True, 5, "red"),
-        Vector(2, "v2", 4, 8, True, 50, "green"),
-        Vector(4, "v4", 9, 10, False, 10, "yellow"),
-        Vector(5, "v5", 14, 25, False, 20, "purple"),
-    ]
-
     def __init__(self, mainViewModel: MainWindowViewModel.MainWindowViewModel, viewModel: VectorSettingsViewModel.VectorSettingsViewModel):
         super().__init__()
         self.setWindowTitle("Vector Settings")
@@ -25,6 +18,11 @@ class VectorSettingsWindow(QWidget):
         self.viewModel = viewModel
 
         self.initUI()
+
+        self.connectSignals()
+
+    def connectSignals(self):
+        self.mainViewModel.vectorListChanged.connect(self.onVectorListChange)
 
     def initUI(self):
 
@@ -56,68 +54,15 @@ class VectorSettingsWindow(QWidget):
 
         # Create Vector List Panel
         self.vectorListPanel = VectorListPanel.VectorListPanel(
-            vectors=self.vectorList, onUp=self.mainViewModel.onVectorMoveUp, onDown=self.mainViewModel.onVectorMoveDown, onDelete=self.mainViewModel.onVectorDelete)
+            vectors=self.mainViewModel.vectorList, onUp=self.mainViewModel.onVectorMoveUp, onDown=self.mainViewModel.onVectorMoveDown, onDelete=self.mainViewModel.onVectorDelete)
 
         layout.addWidget(vectorPanel)
         layout.addWidget(addButton)
         layout.addWidget(self.vectorListPanel)
 
-    def onDelete(self, id: str):
-        for index, vector in enumerate(self.vectorList):
-            if (vector.id == id):
-                self.vectorList.pop(index)
-                break
-
-        self.vectorListPanel.setListItems(self.vectorList)
-        self.refresh()
-
-    def onUp(self, id: str):
-        index = -1
-
-        for i, vector in enumerate(self.vectorList):
-            if (vector.id == id):
-                index = i
-                break
-
-        if (index == -1):
-            return
-
-        if (index > 0):
-            item = self.vectorList.pop(index)
-            self.vectorList.insert(index - 1, item)
-
-        self.vectorListPanel.setListItems(self.vectorList)
-
-    def refresh(self):
+    def onVectorListChange(self, vectorList: list[Vector]):
         self.setUpdatesEnabled(False)
         # remove the flickering and adjust the window size
         QTimer.singleShot(0, self.adjustSize)
         self.setUpdatesEnabled(True)
-
-    def onDown(self, id: str):
-        index = -1
-
-        for i, vector in enumerate(self.vectorList):
-            if (vector.id == id):
-                index = i
-                break
-
-        if (index == -1):
-            return
-
-        if (index < len(self.vectorList) - 1):
-            item = self.vectorList.pop(index)
-            self.vectorList.insert(index + 1, item)
-
-        self.vectorListPanel.setListItems(self.vectorList)
-
-    def onAdd(self):
-        id = self.getId()
-        vector = Vector(id, self.name, self.iScaler, self.jScaler,
-                        self.enabled, self.thickness, self.color)
-        if not self.validateVector(vector):
-            return
-
-        self.vectorList.append(vector)
-        self.vectorListPanel.setListItems(self.vectorList)
-        self.refresh()
+        self.vectorListPanel.setListItems(vectorList=vectorList)
