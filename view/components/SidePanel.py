@@ -40,7 +40,7 @@ class SidePanel(QWidget):
             vectorList=self.vectorList, onToggle=self.onVectorToggle)
         scrollableVectorList = ScrollCard.ScrollCard(
             self.vectorListPanel, resizable=True)
-        v = VerticalLabeledCard.VerticalLabeledCard(
+        self.VectorListCard = VerticalLabeledCard.VerticalLabeledCard(
             "vectors", Qt.AlignmentFlag.AlignLeft, backgroundColor="#f4f4f4", space=10, fontSize=12, subWidget=scrollableVectorList)
 
         # Create SidePanel Button Secion
@@ -52,7 +52,7 @@ class SidePanel(QWidget):
         row = Row.Row(spacing=20, alignment=Qt.AlignmentFlag.AlignTop, subWidgets=[
             Row.RowItem(title_label),
             Row.RowItem(basisVectorFeature),
-            Row.RowItem(v, 1),
+            Row.RowItem(self.VectorListCard, 1),
             Row.RowItem(sidePanelButtonFeature)
         ])
         self.layout.addWidget(row)

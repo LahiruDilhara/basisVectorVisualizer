@@ -5,7 +5,7 @@ from typing import Callable
 from ..Types import Padding
 
 
-def Button(text: str, buttonColor: str, onPressed: Callable, padding: Padding, buttonFontSize: str = "10px", borderRadius: str = "5px", fontColor: str = "white") -> QPushButton:
+def Button(text: str, buttonColor: str, onPressed: Callable, padding: Padding, buttonFontSize: str = "10px", borderRadius: str = "5px", fontColor: str = "white", fixedWidth: int = None) -> QPushButton:
     # Create a button for the sidebar
     button = QPushButton(text)
     baseColor = QColor(buttonColor)
@@ -31,4 +31,7 @@ def Button(text: str, buttonColor: str, onPressed: Callable, padding: Padding, b
 
     if (onPressed):
         button.clicked.connect(onPressed)
+
+    if (fixedWidth):
+        button.setFixedWidth(fixedWidth)
     return button
