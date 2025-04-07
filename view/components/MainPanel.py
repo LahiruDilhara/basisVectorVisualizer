@@ -5,11 +5,12 @@ from PySide6.QtGui import QFont, QColor
 from ..features import ToolBar, PlotArea
 from ..widgets import Column, Row, ToolButton
 
+from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
 
-def MainPanel(toolBarButtons: list[QPushButton] = []):
+
+def MainPanel(plotViewModel: PlotAreaViewModel, toolBarButtons: list[QPushButton] = []):
     return Row.Row(spacing=10, alignment=Qt.AlignmentFlag.AlignTop, subWidgets=[
         Row.RowItem(item=ToolBar.ToolBar(
             spacing=10, alignment=Qt.AlignmentFlag.AlignLeft, toolButtons=toolBarButtons)),
-        Row.RowItem(item=PlotArea.PlotArea(), stretch=1),
+        Row.RowItem(item=PlotArea.PlotArea(plotViewModel), stretch=1),
     ])
-    pass

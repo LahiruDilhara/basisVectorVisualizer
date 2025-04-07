@@ -6,13 +6,16 @@ import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 
 from ..core.DataTypes import Vector
+from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
 
 
 class PlotArea(QWidget):
-    def __init__(self):
+    def __init__(self, viewModel: PlotAreaViewModel):
         super().__init__()
+        self.viewModel = viewModel
 
         self.initUI()
+        self.connectSignals()
 
     def initUI(self):
         # Set Main Plot Area Layout
@@ -21,18 +24,50 @@ class PlotArea(QWidget):
         self.setLayout(main_plot_layout)
 
         # Create Matplotlib Figure and Canvas
-        figure, ax = plt.subplots()
-        canvas = FigureCanvas(figure)
+        self.figure, self.ax = plt.subplots()
+        self.canvas = FigureCanvas(self.figure)
 
         plt.tight_layout()
 
         # Add the canvas to the main plot area
-        main_plot_layout.addWidget(canvas)
+        main_plot_layout.addWidget(self.canvas)
         self.setStyleSheet(
             "background-color: #f4f4f4;")
 
-    def plotVectors(self, vectorList: list[Vector]):
+        self.setCordinateSystem()
+
+    def connectSignals(self):
+        self.viewModel.vectorUpdated.connect(self.plotVectorHandler)
+        self.viewModel.plotLimitChanged.connect(self.plotSizeHandler)
+        self.viewModel.plotCleared.connect(self.clearPlotHandler)
         pass
 
-    def clearPlot(self):
-        pass
+    def plotVectorHandler(self, x: int, y: int, color: str, name: str, originX: int = 0, originY: int = 0, thickness: int = 0):
+        self.ax.quiver(originX, originY, x, y, angles='xy',
+                       scale_units='xy', scale=1, color=color, label=name, width=(thickness/10000))
+        self.drawPlot()
+
+    def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int]):
+        self.ax.set_xlim(xLim)
+        self.ax.set_ylim(yLim)
+        self.canvas.draw()
+
+    def clearPlotHandler(self):
+        self.ax.clear()
+        self.setCordinateSystem()
+
+    def drawPlot(self):
+        self.ax.legend()
+        self.canvas.draw()
+
+    def setCordinateSystem(self):
+        self.ax.axhline(0, color='black', linewidth=1)
+        self.ax.axvline(0, color='black', linewidth=1)
+        self.ax.grid(True, linestyle="--", alpha=0.5)
+
+        self.ax.set_xlim(-10, 10)
+        self.ax.set_ylim(-10, 10)
+
+        self.ax.grid(True, linestyle="--", linewidth=0.5)
+        self.ax.set_xlabel("X-axis")
+        self.ax.set_ylabel("Y-axis")

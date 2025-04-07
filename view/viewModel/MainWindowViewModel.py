@@ -13,6 +13,8 @@ class MainWindowViewModel(QObject):
 
     toolBoxStateChanged: Signal = Signal(ToolBoxState)
 
+    plotVectors: Signal = Signal(BasisVector,)
+
     def __init__(self):
         super().__init__()
         self.basisVector: BasisVector = BasisVector(1, 0, 0, 1)
@@ -157,3 +159,6 @@ class MainWindowViewModel(QObject):
             if (i.id > max):
                 max = i.id
         return max + 1
+
+    def emitPlotVectors(self):
+        pass

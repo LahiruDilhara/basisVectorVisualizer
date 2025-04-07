@@ -13,6 +13,9 @@ from ..core.DataTypes import Vector
 
 from ..viewModel.MainWindowViewModel import MainWindowViewModel
 from ..viewModel.VectorSettingsViewModel import VectorSettingsViewModel
+from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
+
+from ..domain.VectorService import VectorService
 
 
 class MainWindow(QWidget):
@@ -20,6 +23,7 @@ class MainWindow(QWidget):
     def __init__(self, viewModel: MainWindowViewModel):
         super().__init__()
         self.viewModel = viewModel
+        self.plotViewModel = PlotAreaViewModel(VectorService())
 
         self.basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
             ixOnChange=viewModel.onBasisVectorIxChange,
@@ -69,7 +73,8 @@ class MainWindow(QWidget):
         self.sidebar = SidePanel.SidePanel(
             self.basisVectorInputs, sidePanelButtons, vectorList=self.viewModel.vectorList, onVectorToggle=self.viewModel.onVectorToggle)
 
-        self.mainPlotArea = MainPanel.MainPanel(toolBarButtons=toolBarButtons)
+        self.mainPlotArea = MainPanel.MainPanel(
+            toolBarButtons=toolBarButtons, plotViewModel=self.plotViewModel)
 
         # Add the main layout components
         self.mainLayout.addWidget(self.sidebar, 4)
@@ -77,6 +82,8 @@ class MainWindow(QWidget):
 
     def connectSignals(self):
         self.viewModel.vectorListChanged.connect(self.sidebar.updateVectorList)
+        self.viewModel.vectorListChanged.connect(lambda x: self.plotViewModel.SetPlotVectors(
+            vectorList=x, basisVector=self.viewModel.basisVector))
 
     def openVectorSettingsWindow(self):
         viewModel = VectorSettingsViewModel()
