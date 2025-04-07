@@ -38,7 +38,7 @@ class ScrollCard(QScrollArea):
         self.setStyleSheet("""
         QScrollArea {
             border: none;
-            background: #ffffff;
+            background: #f4f4f4;
             border-radius: 10px;
         }
 

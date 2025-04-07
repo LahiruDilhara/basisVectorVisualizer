@@ -40,8 +40,6 @@ class SidePanel(QWidget):
             vectorList=self.vectorList, onToggle=self.onVectorToggle)
         scrollableVectorList = ScrollCard.ScrollCard(
             self.vectorListPanel, resizable=True)
-        scrollableVectorList.setStyleSheet(
-            "background-color:#f4f4f4; border:none; border-radius:8px")
         v = VerticalLabeledCard.VerticalLabeledCard(
             "vectors", Qt.AlignmentFlag.AlignLeft, backgroundColor="#f4f4f4", space=10, fontSize=12, subWidget=scrollableVectorList)
 
