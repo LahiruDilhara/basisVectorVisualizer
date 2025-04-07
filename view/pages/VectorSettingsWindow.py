@@ -6,6 +6,8 @@ from ..components import NewVectorPanel, VectorListPanel
 from ..widgets import sidePanelButton
 from ..core.DataTypes import Vector
 
+from ..viewModel import MainWindowViewModel, VectorSettingsViewModel
+
 
 class VectorSettingsWindow(QWidget):
 
@@ -16,49 +18,29 @@ class VectorSettingsWindow(QWidget):
         Vector(5, "v5", 14, 25, False, 20, "purple"),
     ]
 
-    def setName(self, value):
-        self.name = value
-
-    def setIScaler(self, value):
-        self.iScaler = value
-
-    def setJScaler(self, value):
-        self.jScaler = value
-
-    def setThickness(self, value):
-        self.iScaler = value
-
-    def setColor(self, value):
-        self.color = value
-
-    def setEnabled(self, value):
-        self.enabled = value
-
-    def __init__(self):
+    def __init__(self, mainViewModel: MainWindowViewModel.MainWindowViewModel, viewModel: VectorSettingsViewModel.VectorSettingsViewModel):
         super().__init__()
         self.setWindowTitle("Vector Settings")
+        self.mainViewModel = mainViewModel
+        self.viewModel = viewModel
 
-        # Initialize the data holding part for vector panel section
-        self.name = "name"
-        self.iScaler = 0
-        self.jScaler = 0
-        self.thickness = 1
-        self.color = "#4CAF50"
-        self.enabled = True
+        self.initUI()
+
+    def initUI(self):
 
         self.vectorPanelSpec: NewVectorPanel.VectorPanelSpec = NewVectorPanel.VectorPanelSpec(
-            onEnableInputChange=self.setEnabled,
-            onIScallerChange=self.setIScaler,
-            onJScallerChange=self.setJScaler,
-            onVectorColorChange=self.setColor,
-            onVectorNameChange=self.setName,
-            onVectorThiknesChange=self.setThickness,
-            defaultName=self.name,
-            defaultIScaler=self.iScaler,
-            defaultJScaler=self.jScaler,
-            defaultColor=self.color,
-            defaultEnabled=self.enabled,
-            defaultThickness=self.thickness
+            onEnableInputChange=self.viewModel.setEnabled,
+            onIScallerChange=self.viewModel.setIScaler,
+            onJScallerChange=self.viewModel.setJScaler,
+            onVectorColorChange=self.viewModel.setColor,
+            onVectorNameChange=self.viewModel.setName,
+            onVectorThiknesChange=self.viewModel.setThickness,
+            defaultName=self.viewModel.name,
+            defaultIScaler=self.viewModel.iScaler,
+            defaultJScaler=self.viewModel.jScaler,
+            defaultColor=self.viewModel.color,
+            defaultEnabled=self.viewModel.enabled,
+            defaultThickness=self.viewModel.thickness
         )
 
         layout = QVBoxLayout()
@@ -70,11 +52,11 @@ class VectorSettingsWindow(QWidget):
 
         # Create button
         addButton = sidePanelButton.SidePanelButton(
-            "Add Vector", buttonColor="#4CAF50", buttonHoverColor="#45a049", buttonPressedColor="#3e8e41", onPressed=self.onAdd)
+            "Add Vector", buttonColor="#4CAF50", buttonHoverColor="#45a049", buttonPressedColor="#3e8e41", onPressed=lambda: self.viewModel.addVector(self.mainViewModel.onVectorAdd))
 
         # Create Vector List Panel
         self.vectorListPanel = VectorListPanel.VectorListPanel(
-            vectors=self.vectorList, onUp=self.onUp, onDown=self.onDown, onDelete=self.onDelete)
+            vectors=self.vectorList, onUp=self.mainViewModel.onVectorMoveUp, onDown=self.mainViewModel.onVectorMoveDown, onDelete=self.mainViewModel.onVectorDelete)
 
         layout.addWidget(vectorPanel)
         layout.addWidget(addButton)
@@ -133,26 +115,9 @@ class VectorSettingsWindow(QWidget):
         id = self.getId()
         vector = Vector(id, self.name, self.iScaler, self.jScaler,
                         self.enabled, self.thickness, self.color)
-        print(vector)
         if not self.validateVector(vector):
             return
 
         self.vectorList.append(vector)
         self.vectorListPanel.setListItems(self.vectorList)
         self.refresh()
-
-    def validateVector(self, vector: Vector) -> bool:
-        if (vector.thickness <= 0):
-            return False
-        if (len(vector.name) <= 1):
-            return False
-        if (len(vector.color) <= 2):
-            return False
-        return True
-
-    def getId(self):
-        max = -1
-        for i in self.vectorList:
-            if (i.id > max):
-                max = i.id
-        return max + 1

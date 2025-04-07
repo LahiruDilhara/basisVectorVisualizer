@@ -12,6 +12,7 @@ from .VectorSettingsWindow import VectorSettingsWindow
 from ..core.DataTypes import Vector
 
 from ..viewModel.MainWindowViewModel import MainWindowViewModel
+from ..viewModel.VectorSettingsViewModel import VectorSettingsViewModel
 
 
 class MainWindow(QWidget):
@@ -27,7 +28,7 @@ class MainWindow(QWidget):
             jyOnChange=viewModel.onBasisVectorJyChange
         )
 
-        self.vectorSettingsWindow = VectorSettingsWindow()
+        self.vectorSettingsWindow = None
 
         # Initialize UI components
         self.initUI()
@@ -74,6 +75,9 @@ class MainWindow(QWidget):
         self.mainLayout.addWidget(self.mainPlotArea, 15)
 
     def openVectorSettingsWindow(self):
+        viewModel = VectorSettingsViewModel()
+        self.vectorSettingsWindow = VectorSettingsWindow(
+            mainViewModel=self.viewModel, viewModel=viewModel)
         self.vectorSettingsWindow.show()
 
     def closeEvent(self, event: QCloseEvent):

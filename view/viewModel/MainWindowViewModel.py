@@ -6,9 +6,11 @@ import copy
 
 
 class MainWindowViewModel(QObject):
+
     basisVectorChanged: Signal = Signal(BasisVector)
     # updated vector list, old vector, new vector
-    vectorListChanged: Signal = Signal(object, Vector, Vector)
+    vectorListChanged: Signal = Signal(object)
+
     toolBoxStateChanged: Signal = Signal(ToolBoxState)
 
     def __init__(self):
@@ -57,12 +59,62 @@ class MainWindowViewModel(QObject):
         return default
 
     def onVectorToggle(self, vector: Vector, state: bool):
-        oldVector = copy.copy(vector)
         for v in self.vectorList:
             if (v.id == vector.id):
                 v.enabled = state
-                self.vectorListChanged.emit(self.vectorList, oldVector, v)
+                self.vectorListChanged.emit(self.vectorList)
                 break
+
+    def onVectorDelete(self, id: str):
+        for index, vector in enumerate(self.vectorList):
+            if (vector.id == id):
+                self.vectorList.pop(index)
+                break
+
+        self.vectorListChanged.emit(self.vectorList)
+
+    def onVectorMoveUp(self, id: str):
+        index = -1
+
+        for i, vector in enumerate(self.vectorList):
+            if (vector.id == id):
+                index = i
+                break
+
+        if (index == -1):
+            return
+
+        if (index > 0):
+            item = self.vectorList.pop(index)
+            self.vectorList.insert(index - 1, item)
+
+        self.vectorListChanged.emit(self.vectorList)
+
+    def onVectorMoveDown(self, id: str):
+        index = -1
+
+        for i, vector in enumerate(self.vectorList):
+            if (vector.id == id):
+                index = i
+                break
+
+        if (index == -1):
+            return
+
+        if (index < len(self.vectorList) - 1):
+            item = self.vectorList.pop(index)
+            self.vectorList.insert(index + 1, item)
+
+        self.vectorListChanged.emit(self.vectorList)
+
+    def onVectorAdd(self, vector: Vector):
+        if (vector in self.vectorList or vector == None):
+            return
+        id = self.getId()
+        vector.id = id
+        self.vectorList.append(vector)
+        print(vector)
+        self.vectorListChanged.emit(self.vectorList)
 
     def onPlotVectorToolToggle(self, state: bool):
         if (state == self.toolBoxState.plotVectors):
@@ -99,3 +151,10 @@ class MainWindowViewModel(QObject):
             return
         self.toolBoxState.fillColor = color
         self.toolBoxStateChanged.emit(self.toolBoxState)
+
+    def getId(self):
+        max = -1
+        for i in self.vectorList:
+            if (i.id > max):
+                max = i.id
+        return max + 1
