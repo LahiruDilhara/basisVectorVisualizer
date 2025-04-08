@@ -16,7 +16,7 @@ class PlotArea(QWidget):
         super().__init__()
         self.viewModel = viewModel
 
-        self.animationsList: list[animation.Animation] = []
+        self.vectorAnimationList: list[animation.Animation] = []
 
         self.initUI()
         self.connectSignals()
@@ -56,17 +56,17 @@ class PlotArea(QWidget):
         #                scale_units='xy', scale=1, color=color, label=name, width=(thickness/10000))
 
         ani: animation.TimedAnimation = animation.FuncAnimation(
-            self.figure, lambda f: self.update(f, 0, 0, x, y, initialQuiver), frames=52, interval=1, blit=False, repeat=False)
+            self.figure, lambda f: self.update(f, 0, 0, x, y, initialQuiver, totalFrames=10), frames=10, interval=1, blit=False, repeat=False)
         # save the animation until it finished
-        self.animationsList.append(ani)
+        self.vectorAnimationList.append(ani)
 
         ani.event_source.add_callback(self.animationFinished, ani)
 
         self.drawPlot()
 
     def animationFinished(self, ani):
-        if ani in self.animationsList:
-            self.animationsList.remove(ani)
+        if ani in self.vectorAnimationList:
+            self.vectorAnimationList.remove(ani)
 
     def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int], offset: float = 1):
         graphWidth = abs(xLim[0]) + abs(xLim[1])
@@ -140,13 +140,11 @@ class PlotArea(QWidget):
              (requiredAspectHeight*x1)) / requiredAspectHeight
         return (m, offset)
 
-    def update(self, frame, U1, V1, U2, V2, quiver):
-        # Calculate alpha based on frame but adjust it to prevent overshooting
-        alpha = min(frame / 20, 1)  # Ensures alpha doesn't exceed 1
+    def update(self, frame, U1, V1, U2, V2, quiver, totalFrames):
+        progress = frame / (totalFrames - 1)
 
-        # Interpolate the vector components smoothly
-        U = (1 - alpha) * U1 + alpha * U2
-        V = (1 - alpha) * V1 + alpha * V2
+        U = (U2 - U1) * progress
+        V = (V2 - V1) * progress
 
-        quiver.set_UVC(U, V)  # Update quiver's vector
+        quiver.set_UVC(U, V)
         return quiver,
