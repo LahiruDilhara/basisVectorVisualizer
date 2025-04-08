@@ -51,10 +51,9 @@ class PlotArea(QWidget):
 
     def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int]):
         xAspect = self.width() / self.height()
-        yAspect = 1
 
         self.ax.set_xlim(xLim[0] * xAspect,  xLim[1] * xAspect)
-        self.ax.set_ylim(yLim[0] * yAspect, yLim[1] * yAspect)
+        self.ax.set_ylim(yLim[0], yLim[1])
         # self.ax.set_xlim(xLim)
         # self.ax.set_ylim(yLim)
         self.canvas.draw()

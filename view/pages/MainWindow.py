@@ -83,12 +83,12 @@ class MainWindow(QWidget):
 
     def connectSignals(self):
         self.viewModel.vectorListChanged.connect(self.sidebar.updateVectorList)
-        self.viewModel.vectorListChanged.connect(lambda x: self.plotViewModel.SetPlotVectors(
-            vectorList=x, basisVector=self.viewModel.basisVector))
-        self.viewModel.basisVectorChanged.connect(lambda x: self.plotViewModel.SetPlotVectors(
-            vectorList=self.viewModel.vectorList, basisVector=x))
+        self.viewModel.vectorListChanged.connect(
+            self.plotViewModel.setVectorList)
+        self.viewModel.basisVectorChanged.connect(
+            self.plotViewModel.setBasisVector)
         self.viewModel.toolBoxStateChanged.connect(
-            self.plotViewModel.plotActionHandler)
+            self.plotViewModel.setToolBoxState)
 
     def openVectorSettingsWindow(self):
         viewModel = VectorSettingsViewModel()

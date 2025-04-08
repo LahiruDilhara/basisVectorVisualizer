@@ -4,6 +4,7 @@ from ..Types import BasisVector, ToolBoxState
 from ..core.DataTypes import Vector
 import copy
 import numpy as np
+import math
 
 from ..domain.VectorService import VectorService
 
@@ -25,15 +26,21 @@ class PlotAreaViewModel(QObject):
         self.vectorList: list[Vector] = vectorList
         self.toolBoxState: ToolBoxState = toolBoxState
 
-    def SetPlotVectors(self, basisVector: BasisVector, vectorList: list[Vector]):
-        self.basisVector = basisVector
+    def setVectorList(self, vectorList: list[Vector]):
         self.vectorList = vectorList
-        self.PlotVectors()
+        self.refreshPlot()
 
-    def PlotVectors(self):
+    def setBasisVector(self, basisVector: BasisVector):
+        self.basisVector = basisVector
+        self.refreshPlot()
+
+    def setToolBoxState(self, toolBoxState: ToolBoxState):
+        self.toolBoxState = toolBoxState
+        self.refreshPlot()
+
+    def plotVectors(self):
         if (not self.toolBoxState.plotVectors):
             return
-        self.clearPlot()
         basei = [self.basisVector.ix, self.basisVector.iy]
         basej = [self.basisVector.jx, self.basisVector.jy]
         processedVectors: list[np.ndarray[int, int]] = []
@@ -64,26 +71,32 @@ class PlotAreaViewModel(QObject):
             elif vector[1] < minY:
                 minY = vector[1]
 
-        minX -= 10
-        maxX += 10
-        minY -= 10
-        maxY += 10
+        avg = (abs(minX) + abs(maxX)+abs(minY) + abs(maxY)) / 4
+
+        # minX -= self.getPlotOffset(avg)
+        # maxX += self.getPlotOffset(avg)
+        # minY -= self.getPlotOffset(avg)
+        # maxY += self.getPlotOffset(avg)
         self.plotLimitChanged.emit([minX, maxX], [minY, maxY])
 
-    def plotActionHandler(self, toolBoxState: ToolBoxState):
-        self.clearPlot()
-        if toolBoxState.plotStandardBasisVectors:
-            self.plotStandardBasisVectors()
-        if self.basisVector == None or self.vectorList == None:
-            return
-        if toolBoxState.plotVectors:
-            self.PlotVectors()
+    def getPlotOffset(self, value) -> float:
+        if value == 0:
+            return 1
+        return value * 10 / 100
 
     def plotStandardBasisVectors(self):
+        if not self.toolBoxState.plotStandardBasisVectors:
+            return
         self.vectorUpdated.emit(
             1, 0, "#000000", "i", 0, 0, 50)
         self.vectorUpdated.emit(
             0, 1, "#000000", "j", 0, 0, 50)
+        self.setPlotSize([[1, 0], [0, 1]])
 
     def clearPlot(self):
         self.plotCleared.emit()
+
+    def refreshPlot(self):
+        self.clearPlot()
+        self.plotStandardBasisVectors()
+        self.plotVectors()
