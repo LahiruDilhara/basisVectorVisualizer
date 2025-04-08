@@ -14,7 +14,7 @@ class MainWindowViewModel(QObject):
 
     toolBoxStateChanged: Signal = Signal(ToolBoxState)
 
-    plotVectors: Signal = Signal(BasisVector,)
+    plotVectors: Signal = Signal(BasisVector)
 
     def __init__(self, database: Database):
         super().__init__()
@@ -22,42 +22,47 @@ class MainWindowViewModel(QObject):
         self.database = database
         self.vectorList: list[Vector] = []
         self.toolBoxState: ToolBoxState = ToolBoxState(
-            True, True, True, True, False, "#4CAF50")
+            plotVectors=False, plotStandardBasisVectors=True, plotCurrentBasisVectors=False, drawShape=False, fillShape=False, fillColor="#4CAF50")
 
         self.initDatabase()
 
     def initDatabase(self):
         self.vectorList = self.database.getVectors()
+        self.basisVector = self.database.getBasis()
+
+        QTimer.singleShot(
+            0, lambda: self.basisVectorChanged.emit(self.basisVector))
         QTimer.singleShot(
             0, lambda: self.vectorListChanged.emit(self.vectorList))
 
-    def saveVectors(self):
-        self.database.removeData()
+    def onSave(self):
+        self.database.removeVectorsData()
         self.database.addVectors(self.vectorList)
+        self.database.setBasis(self.basisVector)
 
     def onBasisVectorIxChange(self, value: str):
-        newIx = self.intOrDefault(value, self.basisVector.ix)
+        newIx = self.floatOrDefault(value, self.basisVector.ix)
         if (newIx == self.basisVector.ix):
             return
         self.basisVector.ix = newIx
         self.basisVectorChanged.emit(self.basisVector)
 
     def onBasisVectorIyChange(self, value: str):
-        newIy = self.intOrDefault(value, self.basisVector.iy)
+        newIy = self.floatOrDefault(value, self.basisVector.iy)
         if (newIy == self.basisVector.iy):
             return
         self.basisVector.iy = newIy
         self.basisVectorChanged.emit(self.basisVector)
 
     def onBasisVectorJxChange(self, value: str):
-        newJx = self.intOrDefault(value, self.basisVector.jx)
+        newJx = self.floatOrDefault(value, self.basisVector.jx)
         if (newJx == self.basisVector.jx):
             return
         self.basisVector.jx = newJx
         self.basisVectorChanged.emit(self.basisVector)
 
     def onBasisVectorJyChange(self, value: str):
-        newJy = self.intOrDefault(value, self.basisVector.jy)
+        newJy = self.floatOrDefault(value, self.basisVector.jy)
         if (newJy == self.basisVector.jy):
             return
         self.basisVector.jy = newJy
@@ -68,6 +73,13 @@ class MainWindowViewModel(QObject):
         if (str.isdigit(stripedValue)):
             return int(value)
         return default
+
+    def floatOrDefault(self, value: str, default: float = 0):
+        try:
+            fValue = float(value)
+            return fValue
+        except:
+            return default
 
     def onVectorToggle(self, vector: Vector, state: bool):
         for v in self.vectorList:

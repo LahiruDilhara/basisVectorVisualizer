@@ -11,7 +11,7 @@ from ..domain.VectorService import VectorService
 
 class PlotAreaViewModel(QObject):
 
-    vectorUpdated: Signal = Signal(int, int, str, str, int, int, int)
+    vectorUpdated: Signal = Signal(float, float, str, str, int, int, int)
 
     plotLimitChanged: Signal = Signal(object, object, int)
 
@@ -79,18 +79,18 @@ class PlotAreaViewModel(QObject):
         if not self.toolBoxState.plotStandardBasisVectors:
             return
         self.vectorUpdated.emit(
-            1, 0, "#cc0000", "Standard i", 0, 0, 50)
+            1, 0, "#cc0000", "Standard i", 0, 0, 5)
         self.vectorUpdated.emit(
-            0, 1, "#0000cc", "Standard j", 0, 0, 50)
+            0, 1, "#0000cc", "Standard j", 0, 0, 5)
         self.setPlotSize([[1, 0], [0, 1]])
 
     def plotCurrentBasisVectors(self):
         if not self.toolBoxState.plotCurrentBasisVectors:
             return
         self.vectorUpdated.emit(
-            self.basisVector.ix, self.basisVector.iy, "#b300b3", "Current i", 0, 0, 50)
+            self.basisVector.ix, self.basisVector.iy, "#b300b3", "Current i", 0, 0, 5)
         self.vectorUpdated.emit(
-            self.basisVector.jx, self.basisVector.jy, "#29a329", "Current j", 0, 0, 50)
+            self.basisVector.jx, self.basisVector.jy, "#29a329", "Current j", 0, 0, 5)
         self.setPlotSize([[self.basisVector.ix, self.basisVector.iy], [
                          self.basisVector.jx, self.basisVector.jy]])
 

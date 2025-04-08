@@ -11,8 +11,8 @@ class VectorSettingsViewModel(QObject):
     def __init__(self):
         super().__init__()
         self.name = "vector name"
-        self.iScaler = 0
-        self.jScaler = 0
+        self.iScaler = 0.0
+        self.jScaler = 0.0
         self.thickness = 1
         self.color = "#4CAF50"
         self.enabled = True

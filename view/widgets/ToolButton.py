@@ -8,7 +8,7 @@ from dataclasses import dataclass
 class ToolButtonSpec():
     text: str
     buttonEnableColor: str = "#4CAF50"
-    buttonDisableColor: str = "red"
+    buttonDisableColor: str = "#66ff66"
     onPressed: Callable[[bool], None] = None
     enabled: bool = True
 

@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect, QToolBar
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QColor
 import matplotlib.pyplot as plt
 import numpy as np
@@ -16,10 +16,11 @@ class PlotArea(QWidget):
         super().__init__()
         self.viewModel = viewModel
 
-        self.vectorAnimationList: list[animation.Animation] = []
+        self.vectorAnimationDict: dict[int, animation.Animation] = {}
 
         self.initUI()
         self.connectSignals()
+        self.animationCounter = 0
 
     def initUI(self):
         # Set Main Plot Area Layout
@@ -50,23 +51,33 @@ class PlotArea(QWidget):
 
     def plotVectorHandler(self, x: int, y: int, color: str, name: str, originX: int = 0, originY: int = 0, thickness: int = 0):
         initialQuiver = self.ax.quiver(originX, originY, 0, 0, angles="xy",
-                                       scale_units="xy", scale=1, color=color, label=name, width=(thickness/10000))
+                                       scale_units="xy", scale=1, color=color, label=name, width=(thickness/1000))
 
         # self.ax.quiver(originX, originY, x, y, angles='xy',
         #                scale_units='xy', scale=1, color=color, label=name, width=(thickness/10000))
+        animationId = self.animationCounter
 
         ani: animation.TimedAnimation = animation.FuncAnimation(
-            self.figure, lambda f: self.update(f, 0, 0, x, y, initialQuiver, totalFrames=10), frames=10, interval=1, blit=False, repeat=False)
+            self.figure, lambda f: self.update(f, 0, 0, x, y, initialQuiver, totalFrames=10, id=animationId), frames=10, interval=1, blit=False, repeat=False)
         # save the animation until it finished
-        self.vectorAnimationList.append(ani)
+        animationId = self.addAnimation(ani, animationId)
 
-        ani.event_source.add_callback(self.animationFinished, ani)
+        # increment animation counter
+        self.animationCounter += 1
 
         self.drawPlot()
 
+    def addAnimation(self, ani: animation.Animation, id: int):
+        self.vectorAnimationDict[id] = ani
+
+    def removeAnimation(self, id: int):
+        if id in self.vectorAnimationDict:
+            del self.vectorAnimationDict[id]
+
     def animationFinished(self, ani):
-        if ani in self.vectorAnimationList:
-            self.vectorAnimationList.remove(ani)
+        pass
+        # if ani in self.vectorAnimationDict:
+        #     self.vectorAnimationDict.remove(ani)
 
     def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int], offset: float = 1):
         graphWidth = abs(xLim[0]) + abs(xLim[1])
@@ -95,6 +106,8 @@ class PlotArea(QWidget):
         self.canvas.draw()
 
     def plotDrawHandler(self, vectorList: list[int, int], color: str, fill: bool):
+        if (len(vectorList) <= 1):
+            return
         npVectors = np.array(vectorList)
         polygon = patches.Polygon(
             npVectors, closed=True, edgecolor=color, fill=fill, linewidth=2, facecolor=color)
@@ -140,11 +153,15 @@ class PlotArea(QWidget):
              (requiredAspectHeight*x1)) / requiredAspectHeight
         return (m, offset)
 
-    def update(self, frame, U1, V1, U2, V2, quiver, totalFrames):
+    def update(self, frame, U1, V1, U2, V2, quiver, totalFrames, id: int):
         progress = frame / (totalFrames - 1)
 
         U = (U2 - U1) * progress
         V = (V2 - V1) * progress
 
         quiver.set_UVC(U, V)
+
+        if frame == totalFrames - 1:
+            QTimer.singleShot(1, lambda: self.removeAnimation(id))
+
         return quiver,

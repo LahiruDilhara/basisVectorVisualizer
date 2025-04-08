@@ -10,8 +10,8 @@ from ..widgets import LabeledInput, LabeledCheckBox, LabeledButton
 @dataclass
 class VectorPanelSpec():
     onVectorNameChange: Callable[[str], None] = None
-    onIScallerChange: Callable[[int], None] = None
-    onJScallerChange: Callable[[int], None] = None
+    onIScallerChange: Callable[[float], None] = None
+    onJScallerChange: Callable[[float], None] = None
     onVectorThiknesChange: Callable[[int], None] = None
     onVectorColorChange: Callable[[str], None] = None
     onEnableInputChange: Callable[[bool], None] = None
@@ -33,9 +33,9 @@ class NewVectorPanel(QFrame):
         self.vectorNameInput = LabeledInput.LabledInput(
             "vector name :", vectorPanelSpec.defaultName, 10, 12, 12, vectorPanelSpec.onVectorNameChange)
         self.iScalerInput = LabeledInput.LabledInput(
-            "i scaler :", str(vectorPanelSpec.defaultIScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onIScallerChange(int(text)) if (str.isdigit(text.strip("-"))) else None))
+            "i scaler :", str(vectorPanelSpec.defaultIScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onIScallerChange(float(text)) if (self.isFloat(text)) else None))
         self.jScalerInput = LabeledInput.LabledInput(
-            "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onJScallerChange(int(text)) if (str.isdigit(text.strip("-"))) else None))
+            "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onJScallerChange(float(text)) if (self.isFloat(text)) else None))
         self.vectorEnabledInput = LabeledCheckBox.LabeledCheckBox(
             "vector enabled : ", vectorPanelSpec.defaultEnabled, vectorPanelSpec.onEnableInputChange, setSpace=True)
         self.vectorThikness = LabeledInput.LabledInput(
@@ -66,3 +66,10 @@ class NewVectorPanel(QFrame):
         self.iScalerInput.resetInput()
         self.jScalerInput.resetInput()
         self.vectorThikness.resetInput()
+
+    def isFloat(self,value: str) -> bool:
+        try:
+            float(value)
+            return True
+        except:
+            return False

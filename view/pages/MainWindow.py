@@ -52,7 +52,7 @@ class MainWindow(QWidget):
             SidePaneltButtonSet.SidePanelButtonSpec(
                 text="Vector Settings", onPressed=self.openVectorSettingsWindow),
             SidePaneltButtonSet.SidePanelButtonSpec(
-                text="Save", onPressed=self.viewModel.saveVectors),
+                text="Save", onPressed=self.viewModel.onSave),
         ]
         # Main Plot Area
         toolBarButtons = [
