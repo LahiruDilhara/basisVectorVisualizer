@@ -11,6 +11,10 @@ class BasisVectorInputSpec():
     iyOnChange: Callable[[str], None] = None
     jxOnChange: Callable[[str], None] = None
     jyOnChange: Callable[[str], None] = None
+    defaultIx: float = 0.0
+    defaultIy: float = 0.0
+    defaultJx: float = 0.0
+    defaultJy: float = 0.0
 
     pass
 
@@ -18,13 +22,13 @@ class BasisVectorInputSpec():
 def BasisVectorInput(basisVectorInputSpec: BasisVectorInputSpec) -> QFrame:
     # Create the Inputs
     ixInput = LabeledInput.LabledInput(
-        labelText="x :", defaultValue="1", labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.ixOnChange)
+        labelText="x :", defaultValue=str(basisVectorInputSpec.defaultIx), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.ixOnChange)
     iyInput = LabeledInput.LabledInput(
-        labelText="y :", defaultValue="0", labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.iyOnChange)
+        labelText="y :", defaultValue=str(basisVectorInputSpec.defaultIx), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.iyOnChange)
     jxInput = LabeledInput.LabledInput(
-        labelText="x :", defaultValue="0", labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jxOnChange)
+        labelText="x :", defaultValue=str(basisVectorInputSpec.defaultJx), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jxOnChange)
     jyInput = LabeledInput.LabledInput(
-        labelText="y :", defaultValue="1", labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jyOnChange)
+        labelText="y :", defaultValue=str(basisVectorInputSpec.defaultJy), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jyOnChange)
 
     # Create Input Container
 

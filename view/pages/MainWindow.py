@@ -30,7 +30,11 @@ class MainWindow(QWidget):
             ixOnChange=viewModel.onBasisVectorIxChange,
             iyOnChange=viewModel.onBasisVectorIyChange,
             jxOnChange=viewModel.onBasisVectorJxChange,
-            jyOnChange=viewModel.onBasisVectorJyChange
+            jyOnChange=viewModel.onBasisVectorJyChange,
+            defaultIx=viewModel.basisVector.ix,
+            defaultIy=viewModel.basisVector.iy,
+            defaultJx=viewModel.basisVector.jx,
+            defaultJy=viewModel.basisVector.jy
         )
 
         self.vectorSettingsWindow = None
