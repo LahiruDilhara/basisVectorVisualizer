@@ -6,6 +6,8 @@ from ..features import ToolBar, PlotArea
 from ..widgets import Column, Row, ToolButton
 
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
+from ..Types import BasisVector
+from ..core.DataTypes import Vector
 
 
 def MainPanel(plotViewModel: PlotAreaViewModel, toolBarButtons: list[QPushButton] = []):

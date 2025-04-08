@@ -23,7 +23,8 @@ class MainWindow(QWidget):
     def __init__(self, viewModel: MainWindowViewModel):
         super().__init__()
         self.viewModel = viewModel
-        self.plotViewModel = PlotAreaViewModel(VectorService())
+        self.plotViewModel = PlotAreaViewModel(VectorService(
+        ), basisVector=viewModel.basisVector, vectorList=viewModel.vectorList, toolBoxState=viewModel.toolBoxState)
 
         self.basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
             ixOnChange=viewModel.onBasisVectorIxChange,

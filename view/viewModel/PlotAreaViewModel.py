@@ -16,13 +16,14 @@ class PlotAreaViewModel(QObject):
 
     plotCleared: Signal = Signal()
 
-    def __init__(self, vectorService: VectorService):
+    def __init__(self, vectorService: VectorService, basisVector: BasisVector, vectorList: list[Vector], toolBoxState: ToolBoxState):
         super().__init__()
         self.service: VectorService = vectorService
 
         # State
-        self.basisVector: BasisVector = None
-        self.vectorList: list[Vector] = None
+        self.basisVector: BasisVector = basisVector
+        self.vectorList: list[Vector] = vectorList
+        self.toolBoxState: ToolBoxState = toolBoxState
 
     def SetPlotVectors(self, basisVector: BasisVector, vectorList: list[Vector]):
         self.basisVector = basisVector
@@ -31,6 +32,8 @@ class PlotAreaViewModel(QObject):
         self.PlotVectors()
 
     def PlotVectors(self):
+        if (not self.toolBoxState.plotVectors):
+            return
         basei = [self.basisVector.ix, self.basisVector.iy]
         basej = [self.basisVector.jx, self.basisVector.jy]
         processedVectors: list[np.ndarray[int, int]] = []

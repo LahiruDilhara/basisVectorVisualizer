@@ -36,7 +36,7 @@ class PlotArea(QWidget):
 
         self.setCordinateSystem()
 
-        self.canvas.mpl_connect("motion_notify_event", self.mouse_move_event)
+        # self.canvas.mpl_connect("motion_notify_event", self.mouse_move_event)
 
     def connectSignals(self):
         self.viewModel.vectorUpdated.connect(self.plotVectorHandler)
