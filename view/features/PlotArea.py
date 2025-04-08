@@ -49,13 +49,23 @@ class PlotArea(QWidget):
                        scale_units='xy', scale=1, color=color, label=name, width=(thickness/10000))
         self.drawPlot()
 
-    def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int]):
-        xAspect = self.width() / self.height()
+    def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int], offset: float = 1):
+        graphWidth = abs(xLim[0]) + abs(xLim[1])
+        graphHeight = abs(yLim[0]) + abs(yLim[1])
 
-        self.ax.set_xlim(xLim[0] * xAspect,  xLim[1] * xAspect)
-        self.ax.set_ylim(yLim[0], yLim[1])
-        # self.ax.set_xlim(xLim)
-        # self.ax.set_ylim(yLim)
+        figureWidth, figureHeight = self.figure.get_size_inches() * self.figure.dpi
+
+        addedWidth, addedHeight = self.getAspectedAdedValues(
+            figureWidth, figureHeight, graphWidth, graphHeight, offset=offset)
+
+        xAddition = addedWidth / 2
+        yAddtion = addedHeight / 2
+
+        newXLim = [xLim[0] - xAddition, xLim[1] + xAddition]
+        newYLim = [yLim[0] - yAddtion, yLim[1] + yAddtion]
+
+        self.ax.set_xlim(newXLim[0], newXLim[1])
+        self.ax.set_ylim(newYLim[0], newYLim[1])
         self.canvas.draw()
 
     def clearPlotHandler(self):
@@ -91,3 +101,8 @@ class PlotArea(QWidget):
                 f"Mouse Coordinates: ({event.xdata:.2f}, {event.ydata:.2f})")
         else:
             print("Mouse Coordinates: ( , )")
+
+    def getAspectedAdedValues(self, requiredAspectWidth, requiredAspectHeight, x1, y1, offset):
+        m = ((requiredAspectWidth*y1) + (requiredAspectWidth*offset) -
+             (requiredAspectHeight*x1)) / requiredAspectHeight
+        return (m, offset)

@@ -13,7 +13,7 @@ class PlotAreaViewModel(QObject):
 
     vectorUpdated: Signal = Signal(int, int, str, str, int, int, int)
 
-    plotLimitChanged: Signal = Signal(object, object)
+    plotLimitChanged: Signal = Signal(object, object, int)
 
     plotCleared: Signal = Signal()
 
@@ -71,18 +71,7 @@ class PlotAreaViewModel(QObject):
             elif vector[1] < minY:
                 minY = vector[1]
 
-        avg = (abs(minX) + abs(maxX)+abs(minY) + abs(maxY)) / 4
-
-        # minX -= self.getPlotOffset(avg)
-        # maxX += self.getPlotOffset(avg)
-        # minY -= self.getPlotOffset(avg)
-        # maxY += self.getPlotOffset(avg)
-        self.plotLimitChanged.emit([minX, maxX], [minY, maxY])
-
-    def getPlotOffset(self, value) -> float:
-        if value == 0:
-            return 1
-        return value * 10 / 100
+        self.plotLimitChanged.emit([minX, maxX], [minY, maxY], 5)
 
     def plotStandardBasisVectors(self):
         if not self.toolBoxState.plotStandardBasisVectors:
