@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.patches as patches
+import matplotlib.animation as animation
 
 from ..core.DataTypes import Vector
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
@@ -46,8 +47,26 @@ class PlotArea(QWidget):
         self.viewModel.shapeUpdated.connect(self.plotDrawHandler)
 
     def plotVectorHandler(self, x: int, y: int, color: str, name: str, originX: int = 0, originY: int = 0, thickness: int = 0):
+        initialQuiver = self.ax.quiver(originX, originY, 0, 0, angles="xy",
+                                       scale_units="xy", scale=1, color=color, label=name, width=(thickness/10000))
+
         self.ax.quiver(originX, originY, x, y, angles='xy',
                        scale_units='xy', scale=1, color=color, label=name, width=(thickness/10000))
+
+        # def update(frame, U1, V1, U2, V2, quiver):
+        #     # Calculate alpha based on frame but adjust it to prevent overshooting
+        #     alpha = min(frame / 20, 1)  # Ensures alpha doesn't exceed 1
+
+        #     # Interpolate the vector components smoothly
+        #     U = (1 - alpha) * U1 + alpha * U2
+        #     V = (1 - alpha) * V1 + alpha * V2
+
+        #     quiver.set_UVC(U, V)  # Update quiver's vector
+        #     return quiver,
+
+        # ani = animation.FuncAnimation(
+        #     self.figure, lambda f: update(f, 0, 0, x, y, initialQuiver), frames=52, interval=1, blit=False, repeat=False)
+
         self.drawPlot()
 
     def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int], offset: float = 1):
