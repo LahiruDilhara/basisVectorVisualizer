@@ -1,12 +1,13 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect, QToolBar
 from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont, QColor
+from PySide6.QtGui import QFont, QColor, QWheelEvent
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 import matplotlib.patches as patches
 import matplotlib.animation as animation
+from matplotlib.backend_bases import MouseEvent
 
 from ..core.DataTypes import Vector
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
@@ -42,9 +43,51 @@ class PlotArea(QWidget):
         self.setStyleSheet(
             "background-color: #f4f4f4;")
 
+        self.canvas.mpl_connect("scroll_event", self.onScroll)
+
         self.setCordinateSystem()
 
         # self.canvas.mpl_connect("motion_notify_event", self.mouse_move_event)
+    def onScroll(self, event: MouseEvent):
+        ZOOMVALUE = 1
+        xLimit = self.ax.get_xlim()
+        yLimit = self.ax.get_ylim()
+
+        if (event.xdata == None or event.ydata == None):
+            return
+
+        xNegativeLimitToMouse = event.xdata - xLimit[0]
+        xPositiveLimitToMouse = xLimit[1] - event.xdata
+        yNegativeLimitToMouse = event.ydata - yLimit[0]
+        yPositiveLimitToMouse = yLimit[1] - event.ydata
+
+        xNToxPRatio = xNegativeLimitToMouse / xPositiveLimitToMouse
+        yNToyPRatio = yNegativeLimitToMouse / yPositiveLimitToMouse
+
+        xPostiveSideAddition = ZOOMVALUE
+        xNegativeSideAddition = ZOOMVALUE * xNToxPRatio
+
+        yPositiveSideAddition = ZOOMVALUE
+        yNegativeSideAddition = ZOOMVALUE * yNToyPRatio
+
+        # Get direction
+        direction = 1 if event.button == "up" else -1
+
+        # Set Directed additions
+        newXNLimit = xLimit[0] + \
+            (xNegativeSideAddition * direction)
+        newXPLimit = xLimit[1] - (xPostiveSideAddition * direction)
+        newYNLimit = yLimit[0] + \
+            (yNegativeSideAddition * direction)
+        newYPLimit = yLimit[1] - \
+            (yPositiveSideAddition * direction)
+
+        # self.ax.set_xlim(newXNLimit, newXPLimit)
+        # self.ax.set_ylim(newYNLimit, newYPLimit)
+        # print(
+        #     f"cXLimit: {xLimit} , cYLimit: {yLimit}. nXLimit: {[newXNLimit,newXPLimit]} , nYLimit: {[newYNLimit,newYPLimit]}\n")
+        self.plotSizeHandler(
+            xLim=[newXNLimit, newXPLimit], yLim=[newYNLimit, newYPLimit], offset=1)
 
     def connectSignals(self):
         self.viewModel.vectorUpdated.connect(self.plotVectorHandler)
@@ -91,8 +134,8 @@ class PlotArea(QWidget):
         addedWidth, addedHeight = self.getAspectedAdedValues(
             figureWidth, figureHeight, graphWidth, graphHeight, offset=offset)
 
-        xAddition = abs(addedWidth) / 2
-        yAddtion = abs(addedHeight) / 2
+        xAddition = addedWidth / 2
+        yAddtion = addedHeight / 2
 
         newXLim = [xLim[0] - xAddition, xLim[1] + xAddition]
         newYLim = [yLim[0] - yAddtion, yLim[1] + yAddtion]
@@ -152,8 +195,10 @@ class PlotArea(QWidget):
             print("Mouse Coordinates: ( , )")
 
     def getAspectedAdedValues(self, requiredAspectWidth, requiredAspectHeight, x1, y1, offset):
-        m = ((requiredAspectWidth*y1) + (requiredAspectWidth*offset) -
-             (requiredAspectHeight*x1)) / requiredAspectHeight
+        cTd = requiredAspectWidth / requiredAspectHeight
+        m = cTd * (y1 + offset) - x1
+        # m = ((requiredAspectWidth*y1) + (requiredAspectWidth*offset) -
+        #      (requiredAspectHeight*x1)) / requiredAspectHeight
         return (m, offset)
 
     def update(self, frame, U1, V1, U2, V2, quiver, totalFrames, id: int):
