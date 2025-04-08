@@ -68,6 +68,9 @@ class PlotArea(QWidget):
         self.ax.set_ylim(newYLim[0], newYLim[1])
         self.canvas.draw()
 
+    def plotDrawHandler(self):
+        pass
+
     def clearPlotHandler(self):
         self.ax.clear()
         self.setCordinateSystem()

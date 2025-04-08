@@ -33,9 +33,9 @@ class NewVectorPanel(QFrame):
         self.vectorNameInput = LabeledInput.LabledInput(
             "vector name :", vectorPanelSpec.defaultName, 10, 12, 12, vectorPanelSpec.onVectorNameChange)
         self.iScalerInput = LabeledInput.LabledInput(
-            "i scaler :", str(vectorPanelSpec.defaultIScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onIScallerChange(int(text)) if (str.isdigit(text)) else None))
+            "i scaler :", str(vectorPanelSpec.defaultIScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onIScallerChange(int(text)) if (str.isdigit(text.strip("-"))) else None))
         self.jScalerInput = LabeledInput.LabledInput(
-            "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onJScallerChange(int(text)) if (str.isdigit(text)) else None))
+            "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onJScallerChange(int(text)) if (str.isdigit(text.strip("-"))) else None))
         self.vectorEnabledInput = LabeledCheckBox.LabeledCheckBox(
             "vector enabled : ", vectorPanelSpec.defaultEnabled, vectorPanelSpec.onEnableInputChange, setSpace=True)
         self.vectorThikness = LabeledInput.LabledInput(
