@@ -22,7 +22,7 @@ class MainWindowViewModel(QObject):
         self.database = database
         self.vectorList: list[Vector] = []
         self.toolBoxState: ToolBoxState = ToolBoxState(
-            plotVectors=False, plotStandardBasisVectors=True, plotCurrentBasisVectors=False, drawShape=False, fillShape=False, fillColor="#4CAF50")
+            plotVectors=False, plotStandardBasisVectors=False, plotCurrentBasisVectors=False, drawShape=False, fillShape=False, fillColor="#4CAF50")
 
         self.initDatabase()
 
