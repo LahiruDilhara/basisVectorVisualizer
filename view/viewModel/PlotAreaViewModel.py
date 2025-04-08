@@ -77,10 +77,20 @@ class PlotAreaViewModel(QObject):
         if not self.toolBoxState.plotStandardBasisVectors:
             return
         self.vectorUpdated.emit(
-            1, 0, "#000000", "i", 0, 0, 50)
+            1, 0, "#cc0000", "Standard i", 0, 0, 50)
         self.vectorUpdated.emit(
-            0, 1, "#000000", "j", 0, 0, 50)
+            0, 1, "#0000cc", "Standard j", 0, 0, 50)
         self.setPlotSize([[1, 0], [0, 1]])
+
+    def plotCurrentBasisVectors(self):
+        if not self.toolBoxState.plotCurrentBasisVectors:
+            return
+        self.vectorUpdated.emit(
+            self.basisVector.ix, self.basisVector.iy, "#b300b3", "Current i", 0, 0, 50)
+        self.vectorUpdated.emit(
+            self.basisVector.jx, self.basisVector.jy, "#29a329", "Current j", 0, 0, 50)
+        self.setPlotSize([[self.basisVector.ix, self.basisVector.iy], [
+                         self.basisVector.jx, self.basisVector.jy]])
 
     def clearPlot(self):
         self.plotCleared.emit()
@@ -88,4 +98,5 @@ class PlotAreaViewModel(QObject):
     def refreshPlot(self):
         self.clearPlot()
         self.plotStandardBasisVectors()
+        self.plotCurrentBasisVectors()
         self.plotVectors()
