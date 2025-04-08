@@ -30,10 +30,10 @@ class MainWindowViewModel(QObject):
         self.vectorList = self.database.getVectors()
         self.basisVector = self.database.getBasis()
 
-        QTimer.singleShot(
-            0, lambda: self.basisVectorChanged.emit(self.basisVector))
-        QTimer.singleShot(
-            0, lambda: self.vectorListChanged.emit(self.vectorList))
+        # QTimer.singleShot(
+        #     0, lambda: self.basisVectorChanged.emit(self.basisVector))
+        # QTimer.singleShot(
+        #     0, lambda: self.vectorListChanged.emit(self.vectorList))
 
     def onSave(self):
         self.database.removeVectorsData()
