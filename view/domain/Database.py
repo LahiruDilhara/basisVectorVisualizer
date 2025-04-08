@@ -19,7 +19,8 @@ class Database():
                 iScaler REAL NOT NULL,
                 enabled INTEGER NOT NULL,
                 thickness INTEGER NOT NULL,
-                color TEXT NOT NULL
+                color TEXT NOT NULL,
+                listOrder INTEGER NOT NULL
             )
         """)
 
@@ -35,10 +36,10 @@ class Database():
         self.conn.commit()
 
     def addVectors(self, vectors: list[Vector]):
-        for vector in vectors:
+        for index, vector in enumerate(vectors):
             enabled = 1 if vector.enabled else 0
             self.cursor.execute(
-                "INSERT INTO vector (id,name,jScaler,iScaler,enabled,thickness,color) VALUES (?,?,?,?,?,?,?)", (vector.id, vector.name, vector.jScaler, vector.iScaler, enabled, vector.thickness, vector.color))
+                "INSERT INTO vector (id,name,jScaler,iScaler,enabled,thickness,color,listOrder) VALUES (?,?,?,?,?,?,?,?)", (vector.id, vector.name, vector.jScaler, vector.iScaler, enabled, vector.thickness, vector.color, index))
         self.conn.commit()
 
     def removeVectorsData(self):
@@ -46,7 +47,7 @@ class Database():
 
     def getVectors(self) -> list[Vector]:
         self.cursor.execute(
-            "SELECT id,name,jScaler,iScaler,enabled,thickness,color FROM vector")
+            "SELECT id,name,jScaler,iScaler,enabled,thickness,color FROM vector ORDER BY listOrder")
         rows = self.cursor.fetchall()
 
         vectors = [Vector(id=row[0], name=row[1], jScaler=row[2], iScaler=row[3],
