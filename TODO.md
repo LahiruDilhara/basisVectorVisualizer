@@ -1,0 +1,1 @@
+- base vector visualizer of a given vector. this feature should be able to toggle on or off
