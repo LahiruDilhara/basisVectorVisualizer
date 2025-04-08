@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect, QToolBar
 from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont, QColor, QWheelEvent
+from PySide6.QtGui import QFont, QColor, QWheelEvent, QIcon
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -11,6 +11,42 @@ from matplotlib.backend_bases import MouseEvent
 
 from ..core.DataTypes import Vector
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
+
+
+class MTooBar(NavigationToolbar2QT):
+    def __init__(self, canvas, parent=None, coordinates=True):
+        super().__init__(canvas, parent, coordinates)
+
+        customIcons = {
+            "home": "assets/icons/icons8-home-512.png",
+            "back": "assets/icons/icons8-left-arrow-96.png",
+            "forward": "assets/icons/icons8-right-arrow-96.png",
+            "zoom": "assets/icons/icons8-search-500.png",
+            "pan": "assets/icons/icons8-move-100.png",
+            "settings": "assets/icons/icons8-settings-500.png",
+            "graph": "assets/icons/icons8-graph-96.png",
+            "save": "assets/icons/icons8-save-100.png",
+        }
+
+        # change the default icons
+        for action in self.actions():
+            if action.text() == "Home":
+                action.setIcon(QIcon(customIcons["home"]))
+            if action.text() == "Back":
+                action.setIcon(QIcon(customIcons["back"]))
+            if action.text() == "Forward":
+                action.setIcon(QIcon(customIcons["forward"]))
+            print(action.text())
+            if action.text() == "Pan":
+                action.setIcon(QIcon(customIcons["pan"]))
+            if action.text() == "Zoom":
+                action.setIcon(QIcon(customIcons["zoom"]))
+            if action.text() == "Subplots":
+                action.setIcon(QIcon(customIcons["settings"]))
+            if action.text() == "Customize":
+                action.setIcon(QIcon(customIcons["graph"]))
+            if action.text() == "Save":
+                action.setIcon(QIcon(customIcons["save"]))
 
 
 class PlotArea(QWidget):
@@ -33,7 +69,8 @@ class PlotArea(QWidget):
         # Create Matplotlib Figure and Canvas
         self.figure, self.ax = plt.subplots()
         self.canvas = FigureCanvas(self.figure)
-        self.toolBox = NavigationToolbar2QT(self.canvas, self)
+        self.toolBox = MTooBar(self.canvas, self)
+        # self.toolBox = NavigationToolbar2QT(self.canvas, self)
 
         plt.tight_layout()
 
