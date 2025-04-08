@@ -4,6 +4,7 @@ from PySide6.QtGui import QFont, QColor
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib.patches as patches
 
 from ..core.DataTypes import Vector
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
@@ -42,7 +43,7 @@ class PlotArea(QWidget):
         self.viewModel.vectorUpdated.connect(self.plotVectorHandler)
         self.viewModel.plotLimitChanged.connect(self.plotSizeHandler)
         self.viewModel.plotCleared.connect(self.clearPlotHandler)
-        pass
+        self.viewModel.shapeUpdated.connect(self.plotDrawHandler)
 
     def plotVectorHandler(self, x: int, y: int, color: str, name: str, originX: int = 0, originY: int = 0, thickness: int = 0):
         self.ax.quiver(originX, originY, x, y, angles='xy',
@@ -68,8 +69,12 @@ class PlotArea(QWidget):
         self.ax.set_ylim(newYLim[0], newYLim[1])
         self.canvas.draw()
 
-    def plotDrawHandler(self):
-        pass
+    def plotDrawHandler(self, vectorList: list[int, int], color: str, fill: bool):
+        npVectors = np.array(vectorList)
+        polygon = patches.Polygon(
+            npVectors, closed=True, edgecolor=color, fill=fill, linewidth=2, facecolor=color)
+        self.ax.add_patch(polygon)
+        self.canvas.draw()
 
     def clearPlotHandler(self):
         self.ax.clear()

@@ -17,6 +17,8 @@ class PlotAreaViewModel(QObject):
 
     plotCleared: Signal = Signal()
 
+    shapeUpdated: Signal = Signal(object, str, bool)
+
     def __init__(self, vectorService: VectorService, basisVector: BasisVector, vectorList: list[Vector], toolBoxState: ToolBoxState):
         super().__init__()
         self.service: VectorService = vectorService
@@ -92,6 +94,21 @@ class PlotAreaViewModel(QObject):
         self.setPlotSize([[self.basisVector.ix, self.basisVector.iy], [
                          self.basisVector.jx, self.basisVector.jy]])
 
+    def plotShape(self):
+        if (not self.toolBoxState.drawShape):
+            return
+        basei = [self.basisVector.ix, self.basisVector.iy]
+        basej = [self.basisVector.jx, self.basisVector.jy]
+        processedVectors: list[int, int] = []
+        for vector in self.vectorList:
+            if (not vector.enabled):
+                continue
+            processedVector = self.service.vectorFromBases(
+                iScaler=vector.iScaler, jScaler=vector.jScaler, iBase=basei, jBase=basej)
+            processedVectors.append(processedVector)
+        self.shapeUpdated.emit(
+            processedVectors, self.toolBoxState.fillColor, self.toolBoxState.fillShape)
+
     def clearPlot(self):
         self.plotCleared.emit()
 
@@ -100,3 +117,4 @@ class PlotAreaViewModel(QObject):
         self.plotStandardBasisVectors()
         self.plotCurrentBasisVectors()
         self.plotVectors()
+        self.plotShape()
