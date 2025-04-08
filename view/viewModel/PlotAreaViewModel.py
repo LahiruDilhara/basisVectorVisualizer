@@ -108,6 +108,7 @@ class PlotAreaViewModel(QObject):
             processedVectors.append(processedVector)
         self.shapeUpdated.emit(
             processedVectors, self.toolBoxState.fillColor, self.toolBoxState.fillShape)
+        self.setPlotSize(processedVectors)
 
     def clearPlot(self):
         self.plotCleared.emit()

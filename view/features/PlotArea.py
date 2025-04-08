@@ -16,6 +16,8 @@ class PlotArea(QWidget):
         super().__init__()
         self.viewModel = viewModel
 
+        self.animationsList: list[animation.Animation] = []
+
         self.initUI()
         self.connectSignals()
 
@@ -50,24 +52,21 @@ class PlotArea(QWidget):
         initialQuiver = self.ax.quiver(originX, originY, 0, 0, angles="xy",
                                        scale_units="xy", scale=1, color=color, label=name, width=(thickness/10000))
 
-        self.ax.quiver(originX, originY, x, y, angles='xy',
-                       scale_units='xy', scale=1, color=color, label=name, width=(thickness/10000))
+        # self.ax.quiver(originX, originY, x, y, angles='xy',
+        #                scale_units='xy', scale=1, color=color, label=name, width=(thickness/10000))
 
-        # def update(frame, U1, V1, U2, V2, quiver):
-        #     # Calculate alpha based on frame but adjust it to prevent overshooting
-        #     alpha = min(frame / 20, 1)  # Ensures alpha doesn't exceed 1
+        ani: animation.TimedAnimation = animation.FuncAnimation(
+            self.figure, lambda f: self.update(f, 0, 0, x, y, initialQuiver), frames=52, interval=1, blit=False, repeat=False)
+        # save the animation until it finished
+        self.animationsList.append(ani)
 
-        #     # Interpolate the vector components smoothly
-        #     U = (1 - alpha) * U1 + alpha * U2
-        #     V = (1 - alpha) * V1 + alpha * V2
-
-        #     quiver.set_UVC(U, V)  # Update quiver's vector
-        #     return quiver,
-
-        # ani = animation.FuncAnimation(
-        #     self.figure, lambda f: update(f, 0, 0, x, y, initialQuiver), frames=52, interval=1, blit=False, repeat=False)
+        ani.event_source.add_callback(self.animationFinished, ani)
 
         self.drawPlot()
+
+    def animationFinished(self, ani):
+        if ani in self.animationsList:
+            self.animationsList.remove(ani)
 
     def plotSizeHandler(self, xLim: list[int, int], yLim: list[int, int], offset: float = 1):
         graphWidth = abs(xLim[0]) + abs(xLim[1])
@@ -140,3 +139,14 @@ class PlotArea(QWidget):
         m = ((requiredAspectWidth*y1) + (requiredAspectWidth*offset) -
              (requiredAspectHeight*x1)) / requiredAspectHeight
         return (m, offset)
+
+    def update(self, frame, U1, V1, U2, V2, quiver):
+        # Calculate alpha based on frame but adjust it to prevent overshooting
+        alpha = min(frame / 20, 1)  # Ensures alpha doesn't exceed 1
+
+        # Interpolate the vector components smoothly
+        U = (1 - alpha) * U1 + alpha * U2
+        V = (1 - alpha) * V1 + alpha * V2
+
+        quiver.set_UVC(U, V)  # Update quiver's vector
+        return quiver,
