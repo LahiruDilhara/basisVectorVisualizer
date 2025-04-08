@@ -21,7 +21,7 @@ class MTooBar(NavigationToolbar2QT):
             "home": "assets/icons/icons8-home-512.png",
             "back": "assets/icons/icons8-left-arrow-96.png",
             "forward": "assets/icons/icons8-right-arrow-96.png",
-            "zoom": "assets/icons/icons8-search-500.png",
+            "zoom": "assets/icons/icons8-zoom-to-extents-100.png",
             "pan": "assets/icons/icons8-move-100.png",
             "settings": "assets/icons/icons8-settings-500.png",
             "graph": "assets/icons/icons8-graph-96.png",
@@ -36,7 +36,6 @@ class MTooBar(NavigationToolbar2QT):
                 action.setIcon(QIcon(customIcons["back"]))
             if action.text() == "Forward":
                 action.setIcon(QIcon(customIcons["forward"]))
-            print(action.text())
             if action.text() == "Pan":
                 action.setIcon(QIcon(customIcons["pan"]))
             if action.text() == "Zoom":
