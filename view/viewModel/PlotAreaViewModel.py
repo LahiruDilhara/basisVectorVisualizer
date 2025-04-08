@@ -28,12 +28,12 @@ class PlotAreaViewModel(QObject):
     def SetPlotVectors(self, basisVector: BasisVector, vectorList: list[Vector]):
         self.basisVector = basisVector
         self.vectorList = vectorList
-        self.clearPlot()
         self.PlotVectors()
 
     def PlotVectors(self):
         if (not self.toolBoxState.plotVectors):
             return
+        self.clearPlot()
         basei = [self.basisVector.ix, self.basisVector.iy]
         basej = [self.basisVector.jx, self.basisVector.jy]
         processedVectors: list[np.ndarray[int, int]] = []
