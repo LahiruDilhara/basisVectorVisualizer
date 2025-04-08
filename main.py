@@ -3,11 +3,13 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 from view.viewModel import MainWindowViewModel
+from view.domain.Database import Database
 
 
 def main():
     app = QApplication(sys.argv)
-    mainViewModel = MainWindowViewModel.MainWindowViewModel()
+    database = Database()
+    mainViewModel = MainWindowViewModel.MainWindowViewModel(database=database)
     # mainViewModel.setParent(None)
     window = MainWindow(mainViewModel)
     window.show()

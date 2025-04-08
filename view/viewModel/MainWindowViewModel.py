@@ -1,7 +1,8 @@
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Signal, QTimer
 
 from ..Types import BasisVector, ToolBoxState
 from ..core.DataTypes import Vector
+from ..domain.Database import Database
 import copy
 
 
@@ -15,17 +16,24 @@ class MainWindowViewModel(QObject):
 
     plotVectors: Signal = Signal(BasisVector,)
 
-    def __init__(self):
+    def __init__(self, database: Database):
         super().__init__()
         self.basisVector: BasisVector = BasisVector(1, 0, 0, 1)
-        self.vectorList: list[Vector] = [
-            Vector(1, "v1", 2, 4, True, 5, "red"),
-            Vector(2, "v2", 4, 8, True, 50, "green"),
-            Vector(4, "v4", 9, 10, False, 10, "yellow"),
-            Vector(5, "v5", 14, 25, False, 20, "purple"),
-        ]
+        self.database = database
+        self.vectorList: list[Vector] = []
         self.toolBoxState: ToolBoxState = ToolBoxState(
             True, True, True, True, False, "#4CAF50")
+
+        self.initDatabase()
+
+    def initDatabase(self):
+        self.vectorList = self.database.getVectors()
+        QTimer.singleShot(
+            0, lambda: self.vectorListChanged.emit(self.vectorList))
+
+    def saveVectors(self):
+        self.database.removeData()
+        self.database.addVectors(self.vectorList)
 
     def onBasisVectorIxChange(self, value: str):
         newIx = self.intOrDefault(value, self.basisVector.ix)
