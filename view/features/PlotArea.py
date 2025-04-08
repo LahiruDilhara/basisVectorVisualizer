@@ -3,7 +3,8 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QColor
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 import matplotlib.patches as patches
 import matplotlib.animation as animation
 
@@ -31,10 +32,12 @@ class PlotArea(QWidget):
         # Create Matplotlib Figure and Canvas
         self.figure, self.ax = plt.subplots()
         self.canvas = FigureCanvas(self.figure)
+        self.toolBox = NavigationToolbar2QT(self.canvas, self)
 
         plt.tight_layout()
 
         # Add the canvas to the main plot area
+        main_plot_layout.addWidget(self.toolBox)
         main_plot_layout.addWidget(self.canvas)
         self.setStyleSheet(
             "background-color: #f4f4f4;")
