@@ -78,11 +78,18 @@ class PlotArea(QWidget):
         addedWidth, addedHeight = self.getAspectedAdedValues(
             figureWidth, figureHeight, graphWidth, graphHeight, offset=offset)
 
-        xAddition = addedWidth / 2
-        yAddtion = addedHeight / 2
+        xAddition = abs(addedWidth) / 2
+        yAddtion = abs(addedHeight) / 2
 
         newXLim = [xLim[0] - xAddition, xLim[1] + xAddition]
         newYLim = [yLim[0] - yAddtion, yLim[1] + yAddtion]
+
+        # print("\nadded x value", xAddition)
+        # print("added y value", yAddtion)
+        # print("given x limit", xLim)
+        # print("given y limit", yLim)
+        # print("new x limit", newXLim)
+        # print("new y limit", newYLim)
 
         self.ax.set_xlim(newXLim[0], newXLim[1])
         self.ax.set_ylim(newYLim[0], newYLim[1])
