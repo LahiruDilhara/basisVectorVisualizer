@@ -1,6 +1,6 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect, QToolBar
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont, QColor, QWheelEvent, QIcon
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect, QToolBar, QToolButton
+from PySide6.QtCore import Qt, QTimer, QSize
+from PySide6.QtGui import QFont, QColor, QWheelEvent, QIcon, QAction
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -46,6 +46,9 @@ class MTooBar(NavigationToolbar2QT):
                 action.setIcon(QIcon(customIcons["graph"]))
             if action.text() == "Save":
                 action.setIcon(QIcon(customIcons["save"]))
+
+        # Set icons size
+        self.setIconSize(QSize(32, 32))
 
 
 class PlotArea(QWidget):
