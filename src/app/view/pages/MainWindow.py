@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxLayout, QFrame, QLabel, QSizePolicy, QLineEdit, QGraphicsDropShadowEffect
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont, QColor, QCloseEvent
+from PySide6.QtGui import QFont, QColor, QCloseEvent, QIcon
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
@@ -25,6 +25,8 @@ class MainWindow(QWidget):
         self.plotViewModel = PlotAreaViewModel(VectorService(
         ), basisVector=viewModel.basisVector, vectorList=viewModel.vectorList, toolBoxState=viewModel.toolBoxState)
 
+        self.setWindowIcon(QIcon("assets/icons/icons8-vector-96.png"))
+
         self.basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
             ixOnChange=viewModel.onBasisVectorIxChange,
             iyOnChange=viewModel.onBasisVectorIyChange,
@@ -43,7 +45,7 @@ class MainWindow(QWidget):
         self.connectSignals()
 
     def initUI(self):
-        self.setWindowTitle("Base Vector Display")
+        self.setWindowTitle("Base Vector")
         self.setGeometry(100, 100, 1500, 800)
 
         # Main Layout
