@@ -5,7 +5,7 @@ from typing import Callable
 
 from ..widgets import LabeledText, LabeledColorBox, Column, Button
 from ..Types import Padding
-from ..core import DataTypes
+from ...core import DataTypes
 
 
 def VectorListItem(vector: DataTypes.Vector, onUp: Callable[[str], None], onDown: Callable[[str], None], onDelete: Callable[[str], None]):

@@ -5,7 +5,7 @@ from PySide6.QtGui import QFont, QColor
 from typing import Callable
 
 from ..features import VectorListItem
-from ..core.DataTypes import Vector
+from ...core.DataTypes import Vector
 
 
 class VectorListPanel(QFrame):

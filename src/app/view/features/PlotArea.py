@@ -9,7 +9,7 @@ import matplotlib.patches as patches
 import matplotlib.animation as animation
 from matplotlib.backend_bases import MouseEvent
 
-from ..core.DataTypes import Vector
+from ...core.DataTypes import Vector
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
 
 

@@ -5,7 +5,7 @@ from ..widgets import Column, HorizontalLabeledCard, LabeledInput, Row, sidePane
 from ..features import BasisVectorInput, SidePaneltButtonSet, SidePanelVectorList
 from typing import Callable
 
-from ..core.DataTypes import Vector
+from ...core.DataTypes import Vector
 from ..widgets import VerticalLabeledCard
 
 

@@ -1,9 +1,9 @@
-from view.pages.MainWindow import MainWindow
+from .view.pages.MainWindow import MainWindow
 import sys
 from PySide6.QtWidgets import QApplication
 
-from view.viewModel import MainWindowViewModel
-from view.domain.Database import Database
+from .view.viewModel import MainWindowViewModel
+from .domain.Database import Database
 
 
 def main():

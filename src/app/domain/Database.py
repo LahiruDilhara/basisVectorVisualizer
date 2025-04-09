@@ -1,6 +1,6 @@
 import sqlite3
 from ..core.DataTypes import Vector
-from ..Types import BasisVector
+from ..core.DataTypes import BasisVector
 
 
 class Database():

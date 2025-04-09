@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 
 from ..widgets import Row,  LabeledCheckBox, Column
-from ..core.DataTypes import Vector
+from ...core.DataTypes import Vector
 from typing import Callable
 from functools import partial
 

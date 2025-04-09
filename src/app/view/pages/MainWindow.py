@@ -9,13 +9,12 @@ from ..features import SidePaneltButtonSet, SidePanelVectorList
 from ..components import SidePanel, MainPanel
 from ..widgets import ToolButton, ToolColorButton
 from .VectorSettingsWindow import VectorSettingsWindow
-from ..core.DataTypes import Vector
 
 from ..viewModel.MainWindowViewModel import MainWindowViewModel
 from ..viewModel.VectorSettingsViewModel import VectorSettingsViewModel
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
 
-from ..domain.VectorService import VectorService
+from ...domain.VectorService import VectorService
 
 
 class MainWindow(QWidget):

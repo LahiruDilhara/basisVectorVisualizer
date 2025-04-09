@@ -4,7 +4,7 @@ from PySide6.QtGui import QFont, QColor
 
 from ..components import NewVectorPanel, VectorListPanel
 from ..widgets import sidePanelButton
-from ..core.DataTypes import Vector
+from ...core.DataTypes import Vector
 from ..widgets import ScrollCard
 
 from ..viewModel import MainWindowViewModel, VectorSettingsViewModel

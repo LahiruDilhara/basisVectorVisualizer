@@ -1,12 +1,12 @@
 from PySide6.QtCore import QObject, Signal
 
-from ..Types import BasisVector, ToolBoxState
-from ..core.DataTypes import Vector
+from ..Types import  ToolBoxState
+from ...core.DataTypes import Vector,BasisVector
 import copy
 import numpy as np
 import math
 
-from ..domain.VectorService import VectorService
+from ...domain.VectorService import VectorService
 
 
 class PlotAreaViewModel(QObject):

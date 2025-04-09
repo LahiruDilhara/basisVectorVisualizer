@@ -10,3 +10,11 @@ class Vector():
     enabled: bool
     thickness: int
     color: str
+
+
+@dataclass
+class BasisVector():
+    ix: float
+    iy: float
+    jx: float
+    jy: float

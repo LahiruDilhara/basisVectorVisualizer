@@ -48,14 +48,6 @@ class Padding():
         return f"{paddingList[0]}px {paddingList[1]}px {paddingList[2]}px {paddingList[3]}px"
 
 
-class BasisVector():
-    def __init__(self, ix, iy, jx, jy):
-        self.ix = ix
-        self.iy = iy
-        self.jx = jx
-        self.jy = jy
-
-
 class ToolBoxState():
     def __init__(self, plotVectors: bool, plotStandardBasisVectors: bool, plotCurrentBasisVectors: bool, drawShape: bool, fillShape: bool, fillColor: str):
         self.plotVectors = plotVectors

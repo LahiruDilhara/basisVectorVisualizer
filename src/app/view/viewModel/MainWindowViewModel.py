@@ -1,8 +1,8 @@
 from PySide6.QtCore import QObject, Signal, QTimer
 
-from ..Types import BasisVector, ToolBoxState
-from ..core.DataTypes import Vector
-from ..domain.Database import Database
+from ..Types import  ToolBoxState
+from ...core.DataTypes import Vector,BasisVector
+from ...domain.Database import Database
 import copy
 
 
