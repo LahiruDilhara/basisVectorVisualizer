@@ -1,16 +1,22 @@
 from PySide6.QtWidgets import QPushButton
-from PySide6.QtGui import QFont, QColor
+from PySide6.QtGui import QFont, QColor, QIcon
 from typing import Callable
 
 from ..Types import Padding
 
 
-def Button(text: str, buttonColor: str, onPressed: Callable, padding: Padding, buttonFontSize: str = "10px", borderRadius: str = "5px", fontColor: str = "white", fixedWidth: int = None) -> QPushButton:
+def Button(buttonColor: str, onPressed: Callable, padding: Padding, buttonFontSize: str = "10px", borderRadius: str = "5px", fontColor: str = "white", fixedWidth: int = None, icon: QIcon = None, text: str = None) -> QPushButton:
     # Create a button for the sidebar
-    button = QPushButton(text)
+    button = QPushButton()
     baseColor = QColor(buttonColor)
     hoverColor = baseColor.lighter(120).name()
     pressedColor = baseColor.darker(120).name()
+
+    if icon:
+        button.setIcon(icon)
+
+    if text:
+        button.setText(text)
 
     button.setStyleSheet("""
             QPushButton {{
