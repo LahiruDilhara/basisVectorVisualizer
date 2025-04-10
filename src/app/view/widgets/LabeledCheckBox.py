@@ -4,11 +4,9 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLayout, QHBoxL
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QColor
 
-from .HorizontalStretchBox import HorizontalStretchBox
-
 
 class LabeledCheckBox(QFrame):
-    def __init__(self, text: str, checked: bool, onEnable: Callable[[bool], None] = None, fontSize: int = 11, setSpace: bool = True):
+    def __init__(self, text: str, checked: bool, onEnable: Callable[[bool], None] = None, fontSize: int = 11, setSpace: bool = True, subWidgets: list[QWidget] = []):
         super().__init__()
         self.text = text
         self.checked = checked
@@ -16,6 +14,7 @@ class LabeledCheckBox(QFrame):
         self.fontSize = fontSize
         self.setSpace = setSpace
         self.layout: QHBoxLayout = QHBoxLayout()
+        self.subWidgets = subWidgets
 
         self.setLayout(self.layout)
 
@@ -39,6 +38,9 @@ class LabeledCheckBox(QFrame):
 
         self.layout.addWidget(inputLabel)
         self.layout.addStretch(1)
+        for widget in self.subWidgets:
+            self.layout.addWidget(widget)
+            self.layout.addStretch(1)
         self.layout.addWidget(checkBox)
 
     def CheckHandler(self, state: Qt.CheckState):
