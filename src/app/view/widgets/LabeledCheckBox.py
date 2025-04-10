@@ -7,26 +7,42 @@ from PySide6.QtGui import QFont, QColor
 from .HorizontalStretchBox import HorizontalStretchBox
 
 
-def LabeledCheckBox(text: str, checked: bool, onEnable: Callable[[bool], None] = None, fontSize: int = 11, setSpace: bool = True):
-    def innerCheckHandler(state: Qt.CheckState):
+class LabeledCheckBox(QFrame):
+    def __init__(self, text: str, checked: bool, onEnable: Callable[[bool], None] = None, fontSize: int = 11, setSpace: bool = True):
+        super().__init__()
+        self.text = text
+        self.checked = checked
+        self.onEnabled = onEnable
+        self.fontSize = fontSize
+        self.setSpace = setSpace
+        self.layout: QHBoxLayout = QHBoxLayout()
+
+        self.setLayout(self.layout)
+
+        self.initUI()
+
+    def initUI(self):
+        self.setStyleSheet(
+            "background-color: #ffffff; border-radius: 8px;")
+        inputLabel = QLabel(self.text)
+        inputLabel.setFont(QFont("Arial", self.fontSize))  # 11
+        inputLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        inputLabel.setStyleSheet(
+            "padding: 5px; background-color: white; border-radius: 8px;")
+
+        checkBox = QCheckBox()
+
+        checkBox.setChecked(self.checked)
+
+        if (self.onEnabled):
+            checkBox.stateChanged.connect(self.CheckHandler)
+
+        self.layout.addWidget(inputLabel)
+        self.layout.addStretch(1)
+        self.layout.addWidget(checkBox)
+
+    def CheckHandler(self, state: Qt.CheckState):
         if (state == Qt.CheckState.Checked.value):
-            onEnable(True)
+            self.onEnabled(True)
         elif (state == Qt.CheckState.Unchecked.value):
-            onEnable(False)
-    inputLabel = QLabel(text)
-    inputLabel.setFont(QFont("Arial", fontSize))  # 11
-    inputLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    inputLabel.setStyleSheet(
-        "padding: 5px; background-color: white; border-radius: 8px;")
-
-    checkBox = QCheckBox()
-
-    checkBox.setChecked(checked)
-
-    if (onEnable):
-        checkBox.stateChanged.connect(innerCheckHandler)
-
-    return HorizontalStretchBox(setSpace=setSpace, subWidgets=[
-        inputLabel,
-        checkBox
-    ])
+            self.onEnabled(False)
