@@ -31,17 +31,17 @@ class NewVectorPanel(QFrame):
         self.vectorPanelSpec = vectorPanelSpec
 
         self.vectorNameInput = LabeledInput.LabledInput(
-            "vector name :", vectorPanelSpec.defaultName, 10, 12, 12, vectorPanelSpec.onVectorNameChange)
+            "vector name :", vectorPanelSpec.defaultName, 10, 10, 10, vectorPanelSpec.onVectorNameChange)
         self.iScalerInput = LabeledInput.LabledInput(
-            "i scaler :", str(vectorPanelSpec.defaultIScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onIScallerChange(float(text)) if (self.isFloat(text)) else None))
+            "i scaler :", str(vectorPanelSpec.defaultIScaler), 10, 10, 10, lambda text: (vectorPanelSpec.onIScallerChange(float(text)) if (self.isFloat(text)) else None))
         self.jScalerInput = LabeledInput.LabledInput(
-            "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 12, 12, lambda text: (vectorPanelSpec.onJScallerChange(float(text)) if (self.isFloat(text)) else None))
+            "j scaler :", str(vectorPanelSpec.defaultJScaler), 10, 10, 10, lambda text: (vectorPanelSpec.onJScallerChange(float(text)) if (self.isFloat(text)) else None))
         self.vectorEnabledInput = LabeledCheckBox.LabeledCheckBox(
             "vector enabled : ", vectorPanelSpec.defaultEnabled, vectorPanelSpec.onEnableInputChange, setSpace=True)
         self.vectorThikness = LabeledInput.LabledInput(
-            "thickness :", str(vectorPanelSpec.defaultThickness), 10, 12, 12, lambda text: (vectorPanelSpec.onVectorThiknesChange(int(text)) if (str.isdigit(text)) else None))
+            "thickness :", str(vectorPanelSpec.defaultThickness), 10, 10, 10, lambda text: (vectorPanelSpec.onVectorThiknesChange(int(text)) if (str.isdigit(text)) else None))
         self.colorPickerButton = LabeledButton.LabeledButton(
-            "choose color :", self.vectorPanelSpec.defaultColor, 10, 12, self.onPress, buttonColor=vectorPanelSpec.defaultColor, buttonStrech=True)
+            "choose color :", self.vectorPanelSpec.defaultColor, 10, 10, self.onPress, buttonColor=vectorPanelSpec.defaultColor, buttonStrech=True)
 
         self.layout: QGridLayout = QGridLayout()
         self.setLayout(self.layout)

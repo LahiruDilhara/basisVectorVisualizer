@@ -15,6 +15,7 @@ from ..viewModel.VectorSettingsViewModel import VectorSettingsViewModel
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
 
 from ...domain.VectorService import VectorService
+from importlib import resources
 
 
 class MainWindow(QWidget):
@@ -25,7 +26,8 @@ class MainWindow(QWidget):
         self.plotViewModel = PlotAreaViewModel(VectorService(
         ), basisVector=viewModel.basisVector, vectorList=viewModel.vectorList, toolBoxState=viewModel.toolBoxState)
 
-        self.setWindowIcon(QIcon("assets/icons/icons8-vector-96.png"))
+        iconfile = resources.files("basisvectorvisualizer.assets.icons").joinpath("icons8-vector-96.png")
+        self.setWindowIcon(QIcon(str(iconfile)))
 
         self.basisVectorInputs: BasisVectorInputSpec = BasisVectorInputSpec(
             ixOnChange=viewModel.onBasisVectorIxChange,

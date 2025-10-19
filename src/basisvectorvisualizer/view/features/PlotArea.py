@@ -12,6 +12,10 @@ from matplotlib.backend_bases import MouseEvent
 from ...core.DataTypes import Vector
 from ..viewModel.PlotAreaViewModel import PlotAreaViewModel
 
+from importlib import resources
+
+file_path = resources.files("basisvectorvisualizer.assets.icons");
+
 
 class MTooBar(NavigationToolbar2QT):
     def __init__(self, canvas, parent=None, coordinates=True):
@@ -31,21 +35,21 @@ class MTooBar(NavigationToolbar2QT):
         # change the default icons
         for action in self.actions():
             if action.text() == "Home":
-                action.setIcon(QIcon(customIcons["home"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-home-512.png"))))
             if action.text() == "Back":
-                action.setIcon(QIcon(customIcons["back"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-left-arrow-96.png"))))
             if action.text() == "Forward":
-                action.setIcon(QIcon(customIcons["forward"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-right-arrow-96.png"))))
             if action.text() == "Pan":
-                action.setIcon(QIcon(customIcons["pan"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-move-100.png"))))
             if action.text() == "Zoom":
-                action.setIcon(QIcon(customIcons["zoom"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-zoom-to-extents-100.png"))))
             if action.text() == "Subplots":
-                action.setIcon(QIcon(customIcons["settings"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-settings-500.png"))))
             if action.text() == "Customize":
-                action.setIcon(QIcon(customIcons["graph"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-graph-96.png"))))
             if action.text() == "Save":
-                action.setIcon(QIcon(customIcons["save"]))
+                action.setIcon(QIcon(str(file_path.joinpath("icons8-save-100.png"))))
 
         # Set icons size
         self.setIconSize(QSize(32, 32))

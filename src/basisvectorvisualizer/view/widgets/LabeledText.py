@@ -5,7 +5,7 @@ from typing import Callable
 import matplotlib.pyplot as plt
 
 
-def LabledText(labelText: str, text: str, spacing: int, labelFontSize: int, textFontSize: int, fixedWith: int = None, strechableText: bool = False):
+def LabledText(labelText: str, text: str, spacing: int, labelFontSize: int, textFontSize: int, maxWidth: int = None, strechableText: bool = False):
     frame = QFrame()
     frame.setStyleSheet(
         "background-color: #ffffff; border-radius: 8px;")
@@ -34,7 +34,7 @@ def LabledText(labelText: str, text: str, spacing: int, labelFontSize: int, text
     textLayout.addWidget(textLabel)
     textLayout.addWidget(text, 1 if strechableText else 0)
 
-    if (fixedWith):
-        frame.setFixedWidth(fixedWith)
+    if (maxWidth):
+        frame.setMaximumWidth(maxWidth)
 
     return frame
