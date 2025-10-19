@@ -33,8 +33,8 @@ class ToolColorButton(QPushButton):
                 background-color: {0};
                 color: white;
                 border: none;
-                padding: 10px 20px;
-                font-size: 16px;
+                padding: 6px 12px;
+                font-size: 12px;
                 border-radius: 5px;
             }}
             QPushButton:hover {{

@@ -21,8 +21,11 @@ def VerticalLabeledCard(labelText: str, alignment: Qt.AlignmentFlag, backgroundC
     title_label = QLabel(labelText)
     title_label.setFont(QFont("Arial", fontSize, weight=QFont.Bold))
     title_label.setAlignment(alignment)
+    title_label.setWordWrap(True)
 
     # Add The widgets to the card
     card_layout.addWidget(title_label)
     card_layout.addWidget(subWidget)
+
+    card.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
     return card

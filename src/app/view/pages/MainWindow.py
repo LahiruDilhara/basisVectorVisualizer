@@ -46,7 +46,13 @@ class MainWindow(QWidget):
 
     def initUI(self):
         self.setWindowTitle("Base Vector")
-        self.setGeometry(100, 100, 1500, 800)
+        self.setWindowFlags(
+            Qt.Window |
+            Qt.WindowMinimizeButtonHint |
+            Qt.WindowMaximizeButtonHint |
+            Qt.WindowCloseButtonHint
+        )
+
 
         # Main Layout
         self.mainLayout = QHBoxLayout()

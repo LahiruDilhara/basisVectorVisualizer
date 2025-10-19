@@ -61,7 +61,7 @@ class VectorSettingsWindow(QWidget):
             vectors=self.mainViewModel.vectorList, onUp=self.mainViewModel.onVectorMoveUp, onDown=self.mainViewModel.onVectorMoveDown, onDelete=self.mainViewModel.onVectorDelete)
 
         self.scrollableVectorListPanel = ScrollCard.ScrollCard(
-            self.vectorListPanel, resizable=True, horizontalScrolling=False, minWidth=1300)
+            self.vectorListPanel, resizable=True, horizontalScrolling=False, minWidth=600)
         self.setFixedHeight(600)
 
         self.layout.addWidget(vectorPanel)

@@ -22,21 +22,21 @@ class BasisVectorInputSpec():
 def BasisVectorInput(basisVectorInputSpec: BasisVectorInputSpec) -> QFrame:
     # Create the Inputs
     ixInput = LabeledInput.LabledInput(
-        labelText="x :", defaultValue=str(basisVectorInputSpec.defaultIx), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.ixOnChange)
+        labelText="x :", defaultValue=str(basisVectorInputSpec.defaultIx), labelFontSize=9, spacing=6, inputFontSize=9, onChange=basisVectorInputSpec.ixOnChange)
     iyInput = LabeledInput.LabledInput(
-        labelText="y :", defaultValue=str(basisVectorInputSpec.defaultIy), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.iyOnChange)
+        labelText="y :", defaultValue=str(basisVectorInputSpec.defaultIy), labelFontSize=9, spacing=6, inputFontSize=9, onChange=basisVectorInputSpec.iyOnChange)
     jxInput = LabeledInput.LabledInput(
-        labelText="x :", defaultValue=str(basisVectorInputSpec.defaultJx), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jxOnChange)
+        labelText="x :", defaultValue=str(basisVectorInputSpec.defaultJx), labelFontSize=9, spacing=6, inputFontSize=9, onChange=basisVectorInputSpec.jxOnChange)
     jyInput = LabeledInput.LabledInput(
-        labelText="y :", defaultValue=str(basisVectorInputSpec.defaultJy), labelFontSize=11, spacing=10, inputFontSize=11, onChange=basisVectorInputSpec.jyOnChange)
+        labelText="y :", defaultValue=str(basisVectorInputSpec.defaultJy), labelFontSize=9, spacing=6, inputFontSize=9, onChange=basisVectorInputSpec.jyOnChange)
 
     # Create Input Container
 
     inputContainer1 = HorizontalLabeledCard.HorizontalLabeledCard(
-        "i", Qt.AlignmentFlag.AlignCenter, backgroundColor="#f4f4f4", space=10, fontSize=15, subWidget=Column.Column(spacing=10, subWidgets=[ixInput, iyInput]))
+        "i", Qt.AlignmentFlag.AlignCenter, backgroundColor="#f4f4f4", space=2, fontSize=12, subWidget=Column.Column(spacing=6, subWidgets=[ixInput, iyInput]))
 
     inputContainer2 = HorizontalLabeledCard.HorizontalLabeledCard(
-        "j", Qt.AlignmentFlag.AlignCenter, backgroundColor="#f4f4f4", space=10, fontSize=15, subWidget=Column.Column(spacing=10, subWidgets=[jxInput, jyInput]))
+        "j", Qt.AlignmentFlag.AlignCenter, backgroundColor="#f4f4f4", space=2, fontSize=12, subWidget=Column.Column(spacing=6, subWidgets=[jxInput, jyInput]))
 
     return VerticalLabeledCard.VerticalLabeledCard(
-        labelText="Basis Vector", alignment=Qt.AlignmentFlag.AlignLeft, backgroundColor="#f4f4f4", fontSize=11, space=10, subWidget=Row.Row(spacing=10, alignment=Qt.AlignmentFlag.AlignTop, subWidgets=[Row.RowItem(inputContainer1), Row.RowItem(inputContainer2)]))
+        labelText="Basis Vector", alignment=Qt.AlignmentFlag.AlignLeft, backgroundColor="#f4f4f4", fontSize=10, space=6, subWidget=Row.Row(spacing=6, alignment=Qt.AlignmentFlag.AlignTop, subWidgets=[Row.RowItem(inputContainer1), Row.RowItem(inputContainer2)]))

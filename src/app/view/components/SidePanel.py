@@ -20,13 +20,15 @@ class SidePanel(QWidget):
         self.vectorList = vectorList
         self.onVectorToggle = onVectorToggle
         self.vectorListPanel = None
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.initUi()
 
     def initUi(self):
         # Create Side Panel Title
         title_label = QLabel("Plot Configuration")
-        title_label.setFont(QFont("Arial", 18, weight=QFont.Bold))
+        title_label.setFont(QFont("Arial", 14, weight=QFont.Bold))
+        title_label.setWordWrap(True)
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title_label.setStyleSheet(
             "padding: 10px; background-color: white; border-radius: 8px;")

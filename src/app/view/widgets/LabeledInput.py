@@ -34,14 +34,15 @@ class LabledInput(QFrame):
         inputLabel.setFont(QFont("Arial", self.labelFontSize))  # 11
         inputLabel.setAlignment(Qt.AlignmentFlag.AlignLeft)
         inputLabel.setStyleSheet(
-            "padding: 5px; background-color: white; border-radius: 8px;")
+            "padding: 2px; background-color: white; border-radius: 8px;")
         # Create input fields
         self.input = QLineEdit()
         self.input.setStyleSheet(
-            "padding: 5px; background-color: #f4f4f4; border-radius: 8px;")
+            "padding: 2px; background-color: #f4f4f4; border-radius: 8px;")
         self.input.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.input.setFont(QFont("Arial", self.inputFontSize))
         self.input.setText(self.defaultValue)
+        self.input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
         # Connect the signals
         if (self.onChange):
@@ -52,38 +53,3 @@ class LabledInput(QFrame):
 
     def resetInput(self):
         self.input.setText(self.defaultValue)
-
-        # def LabledInput(labelText: str, defaultValue: str, spacing: int, labelFontSize: int, inputFontSize: int, onChange: Callable[[str], None]):
-        #     frame = QFrame()
-        #     frame.setStyleSheet(
-        #         "background-color: #ffffff; border-radius: 8px;")
-        #     frame.setContentsMargins(0, 0, 0, 0)
-
-        #     # Create a layout for the input
-        #     inputLayout = QHBoxLayout()
-        #     inputLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        #     inputLayout.setSpacing(spacing)  # 10
-        #     frame.setLayout(inputLayout)
-
-        #     # Create a label
-        #     inputLabel = QLabel(labelText)
-        #     inputLabel.setFont(QFont("Arial", labelFontSize))  # 11
-        #     inputLabel.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        #     inputLabel.setStyleSheet(
-        #         "padding: 5px; background-color: white; border-radius: 8px;")
-        #     # Create input fields
-        #     input = QLineEdit()
-        #     input.setStyleSheet(
-        #         "padding: 5px; background-color: #f4f4f4; border-radius: 8px;")
-        #     input.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        #     input.setFont(QFont("Arial", inputFontSize))
-        #     input.setText(defaultValue)
-
-        #     # Connect the signals
-        #     if (onChange):
-        #         input.textChanged.connect(onChange)
-
-        #     inputLayout.addWidget(inputLabel)
-        #     inputLayout.addWidget(input)
-
-        #     return frame

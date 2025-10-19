@@ -44,8 +44,8 @@ class ToolButton(QPushButton):
                 background-color: {0};
                 color: white;
                 border: none;
-                padding: 10px 20px;
-                font-size: 16px;
+                padding: 6px 12px;
+                font-size: 12px;
                 border-radius: 5px;
             }}
             QPushButton:hover {{
@@ -55,29 +55,3 @@ class ToolButton(QPushButton):
                 background-color: {2};
             }}
         """.format(color, hoverColor, pressedColor))
-
-
-# def ToolButton(toolButtonSpec: ToolButtonSpec):
-#     # Create a button for the sidebar
-#     button = QPushButton(toolButtonSpec.text)
-
-#     button.setStyleSheet("""
-#             QPushButton {{
-#                 background-color: {0};
-#                 color: white;
-#                 border: none;
-#                 padding: 10px 20px;
-#                 font-size: 16px;
-#                 border-radius: 5px;
-#             }}
-#             QPushButton:hover {{
-#                 background-color: {1};
-#             }}
-#             QPushButton:pressed {{
-#                 background-color: {2};
-#             }}
-#         """.format(toolButtonSpec.buttonColor, toolButtonSpec.buttonHoverColor, toolButtonSpec.buttonPressedColor))
-
-#     if (toolButtonSpec.onPressed):
-#         button.clicked.connect(toolButtonSpec.onPressed)
-#     return button

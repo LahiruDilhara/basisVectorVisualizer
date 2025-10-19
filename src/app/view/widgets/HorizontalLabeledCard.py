@@ -22,7 +22,7 @@ def HorizontalLabeledCard(labelText: str, alignment: Qt.AlignmentFlag, backgroun
     vector_label.setFont(QFont("Arial", fontSize, weight=QFont.Bold))
     vector_label.setAlignment(alignment)
     vector_label.setStyleSheet(
-        "padding: 5px; border-radius: 8px;")
+        " border-radius: 8px;")
 
     cardLayout.addWidget(vector_label)
     cardLayout.addWidget(subWidget)

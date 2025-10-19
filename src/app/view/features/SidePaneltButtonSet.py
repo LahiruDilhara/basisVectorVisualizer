@@ -1,6 +1,6 @@
 from typing import Callable
 from dataclasses import dataclass
-from PySide6.QtWidgets import QVBoxLayout, QPushButton, QFrame
+from PySide6.QtWidgets import QVBoxLayout, QPushButton, QFrame, QSizePolicy
 from PySide6.QtCore import Qt
 from ..widgets.sidePanelButton import SidePanelButton
 
@@ -32,5 +32,7 @@ def SidePanelButtonSet(buttonList: list[SidePanelButtonSpec], spacing: int = 10)
     # Create buttons
     for button in buttonList:
         button_layout.addWidget(button.build())
+
+    button_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
     return button_frame

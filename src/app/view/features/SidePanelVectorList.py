@@ -16,6 +16,7 @@ class SidePanelVectorList(QWidget):
         self.onToggle = onToggle
         self.layout: QVBoxLayout = QVBoxLayout()
         self.setLayout(self.layout)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.initUI()
 
@@ -45,11 +46,12 @@ class SidePanelVectorList(QWidget):
     def vectorItem(self, text: str, checked: bool, onEnable: Callable, color: str):
         colorBox = QWidget()
         colorBox.setFixedSize(20, 20)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.layout.setSizeConstraint(QLayout.SetDefaultConstraint)
         colorBox.setStyleSheet(
             f"background-color:{color}; border-radius: 10px;")
         return Column.Column(setSpacers=False, spacing=10, alignment=Qt.AlignmentFlag.AlignCenter, subWidgets=[
             LabeledCheckBox.LabeledCheckBox(
                 text=text, checked=checked, onEnable=onEnable),
             colorBox
-
         ])

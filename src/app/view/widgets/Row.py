@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QFrame
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QFrame, QSizePolicy
 from PySide6.QtCore import Qt
 from dataclasses import dataclass
 
@@ -19,5 +19,7 @@ def Row(spacing: int, subWidgets: list[RowItem], alignment: Qt.AlignmentFlag = Q
 
     for item in subWidgets:
         containerLayout.addWidget(item.item, item.stretch)
+    
+    container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
     return container
