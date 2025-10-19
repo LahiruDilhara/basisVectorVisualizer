@@ -1,0 +1,2 @@
+[console_scripts]
+basisvector = basisvectorvisualizer.__main__:run_app
